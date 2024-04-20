@@ -25,6 +25,18 @@ const proposalSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
+    isAccepted:{
+      type: Boolean,
+      default: false,
+    },
+    isRejected:{
+      type: Boolean,
+      default: false,
+    },
+    isAccepetedByHOD:{
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

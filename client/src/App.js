@@ -2,7 +2,8 @@ import Home from "./pages/Home";
 import { Routes, Route, Navigate } from "react-router-dom";
 import CreateBlogs from "./components/createBlogs";
 import Navbar from "./components/Navbar";
-import Signup from "./pages/signup";
+import Signup from "./pages/StudentSignup";
+import Signuppage from "./pages/SignUppage"
 import { useAuthContext } from "./hooks/useAuthContext";
 import { AuthContext } from "./context/AuthProvider";
 import SingleBlog from "./components/SingleBlog";
@@ -22,7 +23,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           {/* public routes */}
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<Signuppage />} />
           <Route index element={<HomeLayout />} />
 
           {/* routes to be protected */}

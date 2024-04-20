@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const Signup = () => {
+const StudentSignup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
@@ -10,7 +10,7 @@ const Signup = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [registrationNumber, setRegistrationNumber] = useState(""); // New state variable
+  const [studentId, setstudentId] = useState(""); // New state variable
   const [session, setSession] = useState(""); // New state variable
   const [department, setDepartment] = useState(""); // New state variable
 
@@ -26,7 +26,7 @@ const Signup = () => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("img", image);
-    formData.append("registrationNumber", registrationNumber); // Append new fields to FormData
+    formData.append("studentId", studentId); // Append new fields to FormData
     formData.append("session", session);
     formData.append("department", department);
 
@@ -49,7 +49,7 @@ const Signup = () => {
     setImage(null);
     setImagePreview(null);
     setPasswordsMatch(true);
-    setRegistrationNumber("");
+    setstudentId("");
     setSession("");
     setDepartment("");
   };
@@ -134,18 +134,18 @@ const Signup = () => {
               </p>
             )}
           </div>
-          {/* Registration Number */}
+          {/* Student ID  */}
           <div className="mb-6 flex items-center">
-            <label htmlFor="registrationNumber" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
-              Registration Number:
+            <label htmlFor="studentId" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
+              Student ID :
             </label>
             <input
-              id="registrationNumber"
+              id="studentId"
               className="w-3/4 px-4 py-3 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
               type="text"
-              onChange={(e) => setRegistrationNumber(e.target.value)}
-              value={registrationNumber}
-              placeholder="Enter your registration number"
+              onChange={(e) => setstudentId(e.target.value)}
+              value={studentId}
+              placeholder="Enter your Student ID "
               required
             />
           </div>
@@ -224,4 +224,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default StudentSignup;

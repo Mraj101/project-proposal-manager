@@ -5,12 +5,16 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 const Home = () => {
   const [proposals, setProposals] = useState([]);
+  console.log(proposals);
   const { usr, setUsr } = useAuthContext();
   const [loading, setLoading] = useState(true);
 
   const fetchProposals = async (receivedUsr) => {
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/proposals/get", receivedUsr);
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/proposals/get",
+        receivedUsr
+      );
       const { data } = response.data;
       setProposals(data);
       setLoading(false);
@@ -35,7 +39,35 @@ const Home = () => {
       {loading ? (
         <div className="text-center">Loading...</div>
       ) : (
-        <div className="grid grid-cols-1">
+        <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
+          <table className="table">
+            {/* Table header */}
+            <thead className="border-b-2">
+              <tr>
+                <th>User Name</th>
+                <th>Project Title</th>
+                <th>File</th>
+                <th>Proposal Sending Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            {/* Table body */}
+            {proposals.map((proposal) => (
+              <tbody key={proposal._id}>
+                <tr>
+                  <td>{proposal.userName}</td>
+                  <td>{proposal.projectTitle}</td>
+                  <td>{proposal.file}</td>
+                  <td>{proposal.createdAt.split("T")[0]}</td>
+                  <td><button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">Pending</button></td>
+                </tr>
+              </tbody>
+            ))}
+          </table>
+        </div>
+      )}
+      {/* Additional comments */}
+      {/* <div className="grid grid-cols-1">
         {proposals.map((proposal) => (
           <Proposal
             key={proposal._id}
@@ -50,8 +82,7 @@ const Home = () => {
             updatedAt={proposal.updatedAt}
           />
         ))}
-      </div>
-      )}
+      </div> */}
     </>
   );
 };
