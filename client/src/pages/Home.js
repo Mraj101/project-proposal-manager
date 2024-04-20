@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Proposal from "../components/Proposal";
 import axios from "axios";
@@ -7,6 +8,7 @@ const Home = () => {
   const [proposals, setProposals] = useState([]);
   console.log(proposals);
   const { usr, setUsr } = useAuthContext();
+  const [isStatus, setIsStatus] = useState("");
   const [loading, setLoading] = useState(true);
 
   const fetchProposals = async (receivedUsr) => {
@@ -18,6 +20,12 @@ const Home = () => {
       const { data } = response.data;
       setProposals(data);
       setLoading(false);
+
+      // if(proposals?.isAccepted === false && proposals?.isRejected === false && proposals?.isAccepetedByHOD === false){
+      //   setIsStatus("Pending");
+      // }else{
+      //   setIsStatus("Accepted");
+      // }
     } catch (error) {
       console.error("Error fetching proposals:", error);
     }
@@ -41,7 +49,6 @@ const Home = () => {
       ) : (
         <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
           <table className="table">
-            {/* Table header */}
             <thead className="border-b-2">
               <tr>
                 <th>User Name</th>
@@ -51,38 +58,36 @@ const Home = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            {/* Table body */}
             {proposals.map((proposal) => (
-              <tbody key={proposal._id}>
+              <tbody>
                 <tr>
                   <td>{proposal.userName}</td>
                   <td>{proposal.projectTitle}</td>
                   <td>{proposal.file}</td>
                   <td>{proposal.createdAt.split("T")[0]}</td>
-                  <td><button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">Pending</button></td>
+                  <td><button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">{(proposal.isAccepted === false && proposal.isRejected === false && proposal.isAccepetedByHOD === false) ? "pending" : "accepted"}</button></td>
                 </tr>
               </tbody>
             ))}
           </table>
         </div>
+        //   <div className="grid grid-cols-1">
+        //     {proposals.map((proposal) => (
+        //     <Proposal
+        //       key={proposal._id}
+        //       description={proposal.description}
+        //       file={proposal.file}
+        //       projectTitle={proposal.projectTitle}
+        //       supervisorId={proposal.supervisorId}
+        //       user={proposal.user}
+        //       userImage={proposal.userImage}
+        //       userName={proposal.userName}
+        //       createdAt={proposal.createdAt}
+        //       updatedAt={proposal.updatedAt}
+        //     />
+        //   ))}
+        // </div>
       )}
-      {/* Additional comments */}
-      {/* <div className="grid grid-cols-1">
-        {proposals.map((proposal) => (
-          <Proposal
-            key={proposal._id}
-            description={proposal.description}
-            file={proposal.file}
-            projectTitle={proposal.projectTitle}
-            supervisorId={proposal.supervisorId}
-            user={proposal.user}
-            userImage={proposal.userImage}
-            userName={proposal.userName}
-            createdAt={proposal.createdAt}
-            updatedAt={proposal.updatedAt}
-          />
-        ))}
-      </div> */}
     </>
   );
 };

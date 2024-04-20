@@ -13,6 +13,8 @@ const StudentSignup = () => {
   const [studentId, setstudentId] = useState(""); // New state variable
   const [session, setSession] = useState(""); // New state variable
   const [department, setDepartment] = useState(""); // New state variable
+  const [position, setPosition] = useState("1");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const StudentSignup = () => {
       setPasswordsMatch(false);
       return;
     }
+
 
     const formData = new FormData();
     formData.append("username", username);
@@ -29,6 +32,8 @@ const StudentSignup = () => {
     formData.append("studentId", studentId); // Append new fields to FormData
     formData.append("session", session);
     formData.append("department", department);
+    formData.append("position", position);
+   
 
     try {
       const res = await axios.post("http://localhost:8000/api/v1/newuser/crt", formData, {

@@ -8,12 +8,12 @@ const TeacherSignup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [registrationNumber, setRegistrationNumber] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(true);  
   const [session, setSession] = useState("");
   const [department, setDepartment] = useState("");
-  const [teacherId, setTeacherId] = useState(""); // New state variable
-  const [gender, setGender] = useState(""); // New state variable
+  const [teacherId, setTeacherId] = useState(""); 
+  const [gender, setGender] = useState(""); 
+  const [position, setPosition] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,11 +27,12 @@ const TeacherSignup = () => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("img", image);
-    formData.append("registrationNumber", registrationNumber);
     formData.append("session", session);
     formData.append("department", department);
-    formData.append("teacherId", teacherId); // Append teacherId to FormData
-    formData.append("gender", gender); // Append gender to FormData
+    formData.append("teacherId", teacherId); 
+    formData.append("gender", gender); 
+    formData.append("position", position);
+
 
     try {
       const res = await axios.post("http://localhost:8000/api/v1/newuser/crt", formData, {
@@ -48,7 +49,6 @@ const TeacherSignup = () => {
       setImage(null);
       setImagePreview(null);
       setPasswordsMatch(true);
-      setRegistrationNumber("");
       setSession("");
       setDepartment("");
       setTeacherId(""); // Clear teacherId field
@@ -71,6 +71,25 @@ const TeacherSignup = () => {
       <div className="signup-content text-center max-w-screen-md w-full mx-auto">
         <h3 className="text-2xl font-semibold mt-6 text-blue-500">Teacher Sign Up Form</h3>
         <form className="bg-white p-6 rounded-lg">
+              {/* Position */}
+          <div className="mb-6 flex items-center">
+            <label htmlFor="position" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
+              Position:
+            </label>
+            <select
+              id="position"
+              className="w-3/4 px-4 py-3 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
+              onChange={(e) => setPosition(e.target.value)}
+              value={position}
+              required
+            >
+              <option value="">Select Position</option>
+              <option value="2">Regular Teacher</option>
+              <option value="3">Head of Department</option>
+            </select>
+          </div>
+
+
           {/* Username */}
           <div className="mb-6 flex items-center">
             <label htmlFor="username" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
@@ -101,8 +120,6 @@ const TeacherSignup = () => {
               required
             />
           </div>
-          {/* Profile Picture */}
-          {/* This field remains the same as in the student signup */}
           {/* Department */}
           <div className="mb-6 flex items-center">
             <label htmlFor="department" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
@@ -172,6 +189,43 @@ const TeacherSignup = () => {
               Other
             </label>
           </div>
+        
+        {/* Password */}
+        <div className="mb-6 flex items-center">
+            <label htmlFor="password" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
+              Password:
+            </label>
+            <input
+              id="password"
+              className="w-3/4 px-4 py-3 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          {/* Confirm Password */}
+          <div className="mb-6 flex items-center">
+            <label htmlFor="confirmPassword" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
+              Confirm Password:
+            </label>
+            <input
+              id="confirmPassword"
+              className="w-3/4 px-4 py-3 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
+              type="password"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              value={confirmPassword}
+              placeholder="Confirm your password"
+              required
+            />
+            {!passwordsMatch && (
+              <p className="text-red-500 text-sm mt-1">
+                Passwords do not match
+              </p>
+            )}
+          </div>
+          
 
           <div className="flex flex-col gap-5 items-center">
             <div className="mb-6 flex items-center">

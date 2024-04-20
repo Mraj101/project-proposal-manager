@@ -15,9 +15,7 @@ const Signup = () => {
       return <StudentSignup />;
     } else if (role === "teacher") {
       return <TeacherSignup />;
-    } else if (role === "hod") {
-      return <HODSignup />;
-    } else {
+    }else {
       return null;
     }
   };
@@ -46,7 +44,6 @@ const Signup = () => {
               <option value="">Select Role</option>
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
-              <option value="hod">Head of Department</option>
             </select>
           </div>
           {/* Render Signup Form based on selected role */}

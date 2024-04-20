@@ -45,29 +45,27 @@ const Navbar = () => {
       }`}
     >
       <div className="flex justify-between items-center">
-        {/* Brand Logo */}
+    
         <Link to="/">
-          <div className="font-bold text-2xl">Project Proposal Manager</div>
+          <div className="font-bold text-2xl text-slate-600">Project Proposal Manager</div>
         </Link>
 
         <div className="flex items-center space-x-4">
-          {/* Home Button */}
+     
           <Link to="/">
-            <button className="border-2 border-blue-400 rounded-md p-1 text-blue-400 ">
+            <button className="border-2 border-blue-800 duration-700 hover:duration-700 hover:border-blue-300 hover:text-blue-300 text-blue-800 rounded-md p-1  px-4 font-bold">
               Home
             </button>
           </Link>
 
-          {/* Create Blog Button */}
           {usr && (
             <Link to="/create">
-              <button className="border-2 border-blue-300 rounded-md p-1 text-blue-400">
+              <button className="border-2 border-blue-800 duration-700 hover:duration-700 hover:border-blue-300 hover:text-blue-300 text-blue-800 rounded-md p-1  px-4 font-bold">
                create proposal
               </button>
             </Link>
           )}
 
-          {/* Login Button */}
           {!usr && (
             <Link to="/login">
               <div>
@@ -78,7 +76,6 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* Signup Button */}
           {!usr && (
             <Link to="/signup">
               <div>
@@ -89,7 +86,6 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* User Profile */}
           {usr && (
             <Link to="userProfile">
               <div>
@@ -102,7 +98,6 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* Logout Button */}
           {usr && (
             <button
               onClick={handleLogout}
