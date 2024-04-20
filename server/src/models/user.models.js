@@ -19,22 +19,26 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            required: [true, 'Password is required']
+            required: true,
         },
         img: {
             type: String,
             required: true,
         },
-        registrationNumber: {
+        userId: {
             type: String,
             required: true,
         },
         session: {
             type: String,
-            required: true,
+            default:null,
         },
         department: {
             type: String,
+            required: true,
+        },
+        position: {
+            type: String, 
             required: true,
         },
         refreshToken: {

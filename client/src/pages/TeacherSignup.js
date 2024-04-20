@@ -9,7 +9,6 @@ const TeacherSignup = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [passwordsMatch, setPasswordsMatch] = useState(true);  
-  const [session, setSession] = useState("");
   const [department, setDepartment] = useState("");
   const [userId, setuserId] = useState(""); 
   const [gender, setGender] = useState(""); 
@@ -27,7 +26,6 @@ const TeacherSignup = () => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("img", image);
-    formData.append("session", session);
     formData.append("department", department);
     formData.append("userId", userId); 
     formData.append("gender", gender); 
@@ -49,7 +47,6 @@ const TeacherSignup = () => {
       setImage(null);
       setImagePreview(null);
       setPasswordsMatch(true);
-      setSession("");
       setDepartment("");
       setuserId(""); // Clear userId field
       setGender(""); // Clear gender field

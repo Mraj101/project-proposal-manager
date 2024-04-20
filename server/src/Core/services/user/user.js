@@ -18,11 +18,11 @@ const options = {
 async function create(data) {
   try {
     console.log(data.file,"inside user create service") 
-    const { username, email, session, userId ,department,password } = data.body;
+    const { username, email, session, userId ,department,password, gender, position } = data.body;
     // console.log(username, email, fullName, password, "data adsf");
     //checking if the feilds are empty
     if (
-      [ username, email, session, userId ,department,password ].some((feild) => feild?.trim() === "")){
+      [ username, email, session, userId ,department,password, gender, position ].some((feild) => feild?.trim() === "")){
       // console.log("no error why?");
       throw new ApiError(404, "all feilds must be filled");
     }
@@ -46,6 +46,8 @@ async function create(data) {
       password: hash,
       username: username.toLowerCase(),
       img:imgOnCloudinary.url,
+      gender,
+      position,
     });
 
     if (!user) {

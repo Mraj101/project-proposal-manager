@@ -34,7 +34,8 @@ const StudentSignup = () => {
     formData.append("session", session);
     formData.append("department", department);
     formData.append("position", position);
-   
+    formData.append("gender", gender); 
+    
 
     try {
       const res = await axios.post("http://localhost:8000/api/v1/newuser/crt", formData, {
@@ -49,7 +50,6 @@ const StudentSignup = () => {
     // Reset form fields and state variables
     setUsername("");
     setEmail("");
-    setFullName("");
     setPassword("");
     setConfirmPassword("");
     setImage(null);
