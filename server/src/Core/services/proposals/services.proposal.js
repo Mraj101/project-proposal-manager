@@ -106,11 +106,6 @@ async function get(data) {
     const modifiedProposals = allProposals.map((singleProposal, index) => {
       return {
         _id: singleProposal._id,
-        title: singleProposal.projectTitle,
-        description: singleProposal.description,
-        file: singleProposal.file,
-        createdAt: singleProposal.createdAt,
-        updatedAt: singleProposal.updatedAt,
         userImage: user.img,
         userName: user.username,
         ...singleProposal,
