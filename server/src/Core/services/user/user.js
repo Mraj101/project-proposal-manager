@@ -105,7 +105,7 @@ async function login(data) {
       await TOKENS.generateAccessAndRefreshToknes(email);
     // console.log(accessToken, "actokens");
     // console.log(refreshToken, "retokens");
-    // console.log(userInstance, "logged in");
+    console.log(userInstance, "logged in");
     let modifiedUser = {
       ...userInstance,
       accessToken,

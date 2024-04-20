@@ -29,8 +29,9 @@ function App() {
           {/* routes to be protected */}
           <Route element={<RequireAuth/>}>
             <Route path="/create" element={<CreateBlogs />} />
-            <Route path="/blogs/:id" element={<SingleBlog />} />
+            {/* <Route path="/blogs/:id" element={<SingleBlog />} /> */}
             <Route path="/userProfile" element={<UserProfile/>} />
+            <Route path="/supervisor" element={<UserProfile/>} />
           </Route>
 
           {/* call all */}
