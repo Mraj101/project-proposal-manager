@@ -35,7 +35,7 @@ const Home = () => {
       {loading ? (
         <div className="text-center">Loading...</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1">
         {proposals.map((proposal) => (
           <Proposal
             key={proposal._id}
