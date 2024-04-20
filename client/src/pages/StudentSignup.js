@@ -10,9 +10,10 @@ const StudentSignup = () => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [studentId, setstudentId] = useState(""); // New state variable
-  const [session, setSession] = useState(""); // New state variable
-  const [department, setDepartment] = useState(""); // New state variable
+  const [userId, setuserId] = useState(""); 
+  const [session, setSession] = useState(""); 
+  const [department, setDepartment] = useState(""); 
+  const [gender, setGender] = useState("");
   const [position, setPosition] = useState("1");
 
 
@@ -29,7 +30,7 @@ const StudentSignup = () => {
     formData.append("email", email);
     formData.append("password", password);
     formData.append("img", image);
-    formData.append("studentId", studentId); // Append new fields to FormData
+    formData.append("userId", userId); // Append new fields to FormData
     formData.append("session", session);
     formData.append("department", department);
     formData.append("position", position);
@@ -54,7 +55,7 @@ const StudentSignup = () => {
     setImage(null);
     setImagePreview(null);
     setPasswordsMatch(true);
-    setstudentId("");
+    setuserId("");
     setSession("");
     setDepartment("");
   };
@@ -66,6 +67,8 @@ const StudentSignup = () => {
       setImage(selectedImage);
     }
   };
+
+
 
   return (
     <div className="signup-container flex items-center justify-center min-h-screen">
@@ -141,15 +144,15 @@ const StudentSignup = () => {
           </div>
           {/* Student ID  */}
           <div className="mb-6 flex items-center">
-            <label htmlFor="studentId" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
+            <label htmlFor="userId" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
               Student ID :
             </label>
             <input
-              id="studentId"
+              id="userId"
               className="w-3/4 px-4 py-3 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
               type="text"
-              onChange={(e) => setstudentId(e.target.value)}
-              value={studentId}
+              onChange={(e) => setuserId(e.target.value)}
+              value={userId}
               placeholder="Enter your Student ID "
               required
             />
@@ -190,6 +193,44 @@ const StudentSignup = () => {
               <option value="english">English</option>
             </select>
           </div>
+
+              {/* Gender */}
+              <div className="mb-6 flex items-center">
+            <label className="text-sm font-bold text-gray-700 mr-4 w-1/4">
+              Gender:
+            </label>
+            <label htmlFor="male" className="mr-2">
+              <input
+                id="male"
+                type="radio"
+                value="male"
+                checked={gender === "male"}
+                onChange={(e) => setGender(e.target.value)}
+              />{" "}
+              Male
+            </label>
+            <label htmlFor="female" className="mr-2">
+              <input
+                id="female"
+                type="radio"
+                value="female"
+                checked={gender === "female"}
+                onChange={(e) => setGender(e.target.value)}
+              />{" "}
+              Female
+            </label>
+            <label htmlFor="other">
+              <input
+                id="other"
+                type="radio"
+                value="other"
+                checked={gender === "other"}
+                onChange={(e) => setGender(e.target.value)}
+              />{" "}
+              Other
+            </label>
+          </div>
+
           {/* Profile Picture */}
           <div className="flex flex-col gap-5 items-center">
             <div className="mb-6 flex items-center">

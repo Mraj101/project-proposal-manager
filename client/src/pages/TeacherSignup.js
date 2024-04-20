@@ -11,7 +11,7 @@ const TeacherSignup = () => {
   const [passwordsMatch, setPasswordsMatch] = useState(true);  
   const [session, setSession] = useState("");
   const [department, setDepartment] = useState("");
-  const [teacherId, setTeacherId] = useState(""); 
+  const [userId, setuserId] = useState(""); 
   const [gender, setGender] = useState(""); 
   const [position, setPosition] = useState("");
 
@@ -29,7 +29,7 @@ const TeacherSignup = () => {
     formData.append("img", image);
     formData.append("session", session);
     formData.append("department", department);
-    formData.append("teacherId", teacherId); 
+    formData.append("userId", userId); 
     formData.append("gender", gender); 
     formData.append("position", position);
 
@@ -51,7 +51,7 @@ const TeacherSignup = () => {
       setPasswordsMatch(true);
       setSession("");
       setDepartment("");
-      setTeacherId(""); // Clear teacherId field
+      setuserId(""); // Clear userId field
       setGender(""); // Clear gender field
     } catch (error) {
       console.log("Error occurred while creating user:", error);
@@ -140,15 +140,15 @@ const TeacherSignup = () => {
           </div>
           {/* Teacher ID */}
           <div className="mb-6 flex items-center">
-            <label htmlFor="teacherId" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
+            <label htmlFor="userId" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
               Teacher ID:
             </label>
             <input
-              id="teacherId"
+              id="userId"
               className="w-3/4 px-4 py-3 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
               type="text"
-              onChange={(e) => setTeacherId(e.target.value)}
-              value={teacherId}
+              onChange={(e) => setuserId(e.target.value)}
+              value={userId}
               placeholder="Enter your teacher ID"
               required
             />
@@ -205,6 +205,7 @@ const TeacherSignup = () => {
               required
             />
           </div>
+
           {/* Confirm Password */}
           <div className="mb-6 flex items-center">
             <label htmlFor="confirmPassword" className="text-sm font-bold text-gray-700 mr-4 w-1/4">
