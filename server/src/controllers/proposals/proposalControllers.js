@@ -32,10 +32,13 @@ async function createProposals(req, res) {
 
 async function updateProposal(req, res) {
   try {
-    // console.log("Controller", req.body);
+    // console.log("Controller update pro", req.body);
+    // console.log("Controller update pro", req.params);
     // console.log("file", req.file);
     // console.log("hello proposal creating");
-    let response = await proposalService.update(req);
+    const {id} = req.params;
+    const {data} = req.body;
+    let response = await proposalService.updatebySupervisor(data,id);
     return res
       .status(201)
       .json(new ApiResponse(200, response, "proposals updated Successfully"));

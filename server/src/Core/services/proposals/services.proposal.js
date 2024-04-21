@@ -51,26 +51,23 @@ async function create(data) {
   }
 }
 
-async function update(data) {
+async function updatebySupervisor(data, id) {
   try {
-    const proposalId= data.params;
-
-    const SingleProposal = await proposalModels.findByIdAndUpdate(proposalId,{
-      
-    })
-    // console.log(blogInstance,"bloginstance");
-    return proposalCreated;
+    // console.log(data,"this is data");
+    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
+      $set: { isAccepted: true },
+    });
+    console.log(proposalInstance, "proposalInstance");
+    return proposalInstance;
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;
     } else {
       console.log(error);
-      throw new ApiError(500, "ProposalService not available");
+      throw new ApiError(500, "Proposal Update Service not available");
     }
   }
 }
-
-
 
 // async function getAll() {
 //   try {
@@ -111,20 +108,22 @@ async function update(data) {
 //   }
 // }
 
-
 async function get(data) {
   try {
-    console.log("inside get proposals",data.body);
+    console.log("inside get proposals", data.body);
     const allProposals = await proposalModels.find({}).lean();
     // console.log("all proposals",allProposals);
 
     const user = await userModels.find({}).lean();
 
-    console.log("all blogs",allProposals);
-    console.log("proposal of user",user);
+    console.log("all blogs", allProposals);
+    console.log("proposal of user", user);
 
     const modifiedProposals = allProposals.map((singleProposal, index) => {
-      const matchedUser = user.find((singleUser)=>singleProposal.user.toString() === singleUser._id.toString())
+      const matchedUser = user.find(
+        (singleUser) =>
+          singleProposal.user.toString() === singleUser._id.toString()
+      );
       return {
         ...matchedUser,
         ...singleProposal,
@@ -148,10 +147,12 @@ async function getIndividual(data) {
   try {
     const userEmail = data.body.supervisorEmail;
     const supervisorId = data.body.supervisorId;
-    const user = await userModels.findOne({email: userEmail}).lean();
+    const user = await userModels.findOne({ email: userEmail }).lean();
     const position = user?.position.toString();
-    const allProposals = await proposalModels.find({ supervisorId: supervisorId }).lean();
-    
+    const allProposals = await proposalModels
+      .find({ supervisorId: supervisorId })
+      .lean();
+
     const modifiedProposals = allProposals.map((singleProposal, index) => {
       return {
         _id: singleProposal._id,
@@ -177,8 +178,6 @@ async function getIndividual(data) {
     }
   }
 }
-
-
 
 async function getSingle(data) {
   try {
@@ -206,4 +205,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, getSingle,getIndividual };
+module.exports = { create, get, updatebySupervisor, getSingle, getIndividual };
