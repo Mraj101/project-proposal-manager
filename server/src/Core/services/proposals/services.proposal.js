@@ -69,6 +69,25 @@ async function updatebySupervisor(data, id) {
   }
 }
 
+async function updatedByHod(data, id) {
+  try {
+    // console.log(data,"this is data");
+    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
+      $set: { isAccepetedByHOD: true },
+    });
+    console.log(proposalInstance, "proposalInstance");
+    return proposalInstance;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "Proposal Update Service not available");
+    }
+  }
+}
+
+
 // async function getAll() {
 //   try {
 //     const allBlogs = await proposalModels.find({}).lean();
@@ -205,4 +224,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, updatebySupervisor, getSingle, getIndividual };
+module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod };

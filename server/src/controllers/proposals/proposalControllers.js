@@ -32,13 +32,43 @@ async function createProposals(req, res) {
 
 async function updateProposal(req, res) {
   try {
+
     // console.log("Controller update pro", req.body);
     // console.log("Controller update pro", req.params);
     // console.log("file", req.file);
     // console.log("hello proposal creating");
+
     const {id} = req.params;
     const {data} = req.body;
     let response = await proposalService.updatebySupervisor(data,id);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "proposals updated Successfully"));
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
+async function updateByHod(req, res) {
+  try {
+    
+    // console.log("Controller update pro", req.body);
+    // console.log("Controller update pro", req.params);
+    // console.log("file", req.file);
+    // console.log("hello proposal creating");
+
+    const {id} = req.params;
+    const {data} = req.body;
+    let response = await proposalService.updatedByHod(data,id);
     return res
       .status(201)
       .json(new ApiResponse(200, response, "proposals updated Successfully"));
@@ -158,4 +188,4 @@ async function getSingleBlog(req, res) {
   }
 }
 
-module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals,updateProposal };
+module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals,updateProposal,updateByHod };
