@@ -1,17 +1,17 @@
-import Hero from "./Hero";
+import Hero from "../pages/Hero";
 
-const SupervisorChekclist = () => {
+const supervisorChecklist = () => {
   return (
     <div className="">
       <Hero
         imgURL={
-          "https://plus.unsplash.com/premium_photo-1675731938394-bf2f3abb4ee2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        }
+            "https://plus.unsplash.com/premium_photo-1675731938394-bf2f3abb4ee2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
         title={"Supervisor Dash"}
       />
       <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
         <table className="table">
-          {/ head /}
+          
           <thead className="border-b-2">
             <tr>
               <th>Student's Name</th>
@@ -129,4 +129,4 @@ const SupervisorChekclist = () => {
   );
 };
 
-export default SupervisorChekclist;
+export default supervisorChecklist;

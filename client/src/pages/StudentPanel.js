@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import Proposal from "../components/Proposal";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-const Home = () => {
+const StudentPanel = () => {
   const [proposals, setProposals] = useState([]);
   console.log(proposals);
   const { usr, setUsr } = useAuthContext();
@@ -47,7 +46,21 @@ const Home = () => {
       {loading ? (
         <div className="text-center">Loading...</div>
       ) : (
-        <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
+        <>
+              <div className="w-full relative">
+            <img
+              src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              className="w-full h-[400px] object-cover"
+              alt="Not Found"
+            />
+            <div className="absolute inset-0 bg-black opacity-50 "></div>
+            <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute top-40 left-[310px] border-2 rounded-lg border-slate-100 px-4 py-2">
+              Student's Panel
+            </h1>
+            <div className="absolute inset-0 bg-black opacity-30 "></div>
+          </div>
+
+          <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
           <table className="table">
             <thead className="border-b-2">
               <tr>
@@ -65,31 +78,24 @@ const Home = () => {
                   <td>{proposal.projectTitle}</td>
                   <td>{proposal.file}</td>
                   <td>{proposal.createdAt.split("T")[0]}</td>
-                  <td><button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">{(proposal.isAccepted === false && proposal.isRejected === false && proposal.isAccepetedByHOD === false) ? "pending" : "accepted"}</button></td>
+                  <td>
+                    <button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">
+                      {proposal.isAccepted === false &&
+                      proposal.isRejected === false &&
+                      proposal.isAccepetedByHOD === false
+                        ? "pending"
+                        : "accepted"}
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             ))}
           </table>
         </div>
-        //   <div className="grid grid-cols-1">
-        //     {proposals.map((proposal) => (
-        //     <Proposal
-        //       key={proposal._id}
-        //       description={proposal.description}
-        //       file={proposal.file}
-        //       projectTitle={proposal.projectTitle}
-        //       supervisorId={proposal.supervisorId}
-        //       user={proposal.user}
-        //       userImage={proposal.userImage}
-        //       userName={proposal.userName}
-        //       createdAt={proposal.createdAt}
-        //       updatedAt={proposal.updatedAt}
-        //     />
-        //   ))}
-        // </div>
+        </>
       )}
     </>
   );
 };
 
-export default Home;
+export default StudentPanel;

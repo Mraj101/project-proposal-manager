@@ -1,14 +1,12 @@
-import React from 'react'
-import Hero from './Hero'
-import Home from './Home'
+import React from "react";
+import Home from "./StudentPanel";
 
 const HomeLayout = () => {
   return (
     <div>
-      <Hero/>
-      <Home/>
+      <Home />
     </div>
-  )
-}
+  );
+};
 
-export default HomeLayout
+export default HomeLayout;

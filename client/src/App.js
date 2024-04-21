@@ -1,9 +1,9 @@
-import Home from "./pages/Home";
+import Home from "./pages/StudentPanel";
 import { Routes, Route, Navigate } from "react-router-dom";
-import CreateBlogs from "./components/createBlogs";
+import CreateProposal from "./components/CreateProposal";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/StudentSignup";
-import Signuppage from "./pages/SignUppage"
+import Signuppage from "./pages/SignUppage";
 import { useAuthContext } from "./hooks/useAuthContext";
 import { AuthContext } from "./context/AuthProvider";
 import SingleBlog from "./components/SingleBlog";
@@ -13,6 +13,7 @@ import Hero from "./pages/Hero";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import UserProfile from "./components/userProfile";
+import SupervisorChekclist from "./components/SupervisorChekclist";
 function App() {
   const { user } = useAuthContext(AuthContext);
 
@@ -20,20 +21,20 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route element={<Layout />}>
+          {" "}
+          {/*path should not be in layout*/}
           {/* public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signuppage />} />
-          <Route index element={<HomeLayout />} />
-
           {/* routes to be protected */}
-          <Route element={<RequireAuth/>}>
-            <Route path="/create" element={<CreateBlogs />} />
+          <Route element={<RequireAuth />}>
+            <Route index element={<HomeLayout />} />
+            <Route path="/create" element={<CreateProposal />} />
             {/* <Route path="/blogs/:id" element={<SingleBlog />} /> */}
-            <Route path="/userProfile" element={<UserProfile/>} />
-            <Route path="/supervisor" element={<UserProfile/>} />
+            <Route path="/userProfile" element={<UserProfile />} />
+            {/* <Route path="/supervisor" element={<SupervisorChekclist/>} /> */}
           </Route>
-
           {/* call all */}
           {/* <Route path="*" element={<Missing />} /> */}
         </Route>
