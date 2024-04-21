@@ -47,7 +47,7 @@ const StudentPanel = () => {
         <div className="text-center">Loading...</div>
       ) : (
         <>
-              <div className="w-full relative">
+          <div className="w-full relative">
             <img
               src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               className="w-full h-[400px] object-cover"

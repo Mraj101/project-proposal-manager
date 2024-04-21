@@ -13,7 +13,8 @@ import Hero from "./pages/Hero";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import UserProfile from "./components/userProfile";
-import SupervisorChekclist from "./components/SupervisorChekclist";
+import SuperVisorPanel from "./components/SuperVisorPanel";
+
 function App() {
   const { user } = useAuthContext(AuthContext);
 
@@ -33,7 +34,7 @@ function App() {
             <Route path="/create" element={<CreateProposal />} />
             {/* <Route path="/blogs/:id" element={<SingleBlog />} /> */}
             <Route path="/userProfile" element={<UserProfile />} />
-            {/* <Route path="/supervisor" element={<SupervisorChekclist/>} /> */}
+            <Route path="/supervisor" element={<SuperVisorPanel/>} />
           </Route>
           {/* call all */}
           {/* <Route path="*" element={<Missing />} /> */}
