@@ -14,6 +14,8 @@ const TeacherSignup = () => {
   const [gender, setGender] = useState(""); 
   const [position, setPosition] = useState("");
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {

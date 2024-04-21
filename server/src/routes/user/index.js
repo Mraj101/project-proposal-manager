@@ -8,8 +8,9 @@ const multerMiddleware = require('../../middlewares/multer.middleware.js');
 router.post("/crt",multerMiddleware.single('img'),userControllers.createUser);
 router.post("/login", userControllers.loginUser);
 router.post("/logout",verifyJWT,userControllers.logoutUser);
+router.get("/get", userControllers.getUsers)
 // router.post("/logout",userControllers.logoutUser);
-router.post("/refresh-AccessToken",userControllers.refreshAccessToken)
-router.post("/changeCurrentPassword",verifyJWT,userControllers.changeCurrentPassword)
+router.post("/refresh-AccessToken",userControllers.refreshAccessToken);
+router.post("/changeCurrentPassword",verifyJWT,userControllers.changeCurrentPassword);
 
 module.exports = router

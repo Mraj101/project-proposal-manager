@@ -11,7 +11,7 @@ const HodPanel = () => {
               alt="Not Found"
             />
             <div className="absolute inset-0 bg-black opacity-50 "></div>
-            <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 rounded-lg border-slate-100 px-4 py-2">
+            <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 rounded-lg border-slate-100 px-4 py-2">
               Dept Head 
             </h1>
             <div className="absolute inset-0 bg-black opacity-30 "></div>

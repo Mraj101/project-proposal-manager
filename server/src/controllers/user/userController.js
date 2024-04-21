@@ -41,6 +41,29 @@ async function createUser(req, res) {
   }
 }
 
+
+async function getUsers(req, res) {
+  try {
+    let response = await userServices.get();
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "Getting user's"));
+  } catch (err) {
+    console.error(err);
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
+
+
 async function loginUser(req, res) {
   try {
     let { options, modifiedUser } = await userServices.login(req.body);
@@ -99,6 +122,8 @@ async function logoutUser(req, res) {
 }
 
 
+
+
 async function refreshAccessToken(req, res) {
   try {
     console.log(" inside refresh controller ");
@@ -128,6 +153,7 @@ async function refreshAccessToken(req, res) {
 }
 
 
+
 async function changeCurrentPassword(req, res) {
   try {
     // console.log(" inside change password controller ");
@@ -147,4 +173,4 @@ async function changeCurrentPassword(req, res) {
 }
 
 
-module.exports = { createUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword };
+module.exports = { createUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getUsers };

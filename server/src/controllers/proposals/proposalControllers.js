@@ -84,6 +84,26 @@ async function getProposals(req, res) {
   }
 }
 
+async function getSingleProposals(req, res){
+  try{
+    let response = await proposalService.getIndividual(req);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "get single blog"));
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
 async function getSingleBlog(req, res) {
   try {
     // console.log("Controller", req.body);
@@ -112,4 +132,4 @@ async function getSingleBlog(req, res) {
   }
 }
 
-module.exports = { createProposals, getSingleBlog, getProposals, getAll };
+module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals };

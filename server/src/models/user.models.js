@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
         userId: {
             type: String,
             required: true,
+            unique: true,
         },
         session: {
             type: String,

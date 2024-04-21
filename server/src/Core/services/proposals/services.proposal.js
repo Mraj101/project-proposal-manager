@@ -125,6 +125,40 @@ async function get(data) {
   }
 }
 
+async function getIndividual(data) {
+  try {
+    const userEmail = data.body.supervisorEmail;
+    const user = await userModels.findOne({email: userEmail}).lean();
+    const position = user?.position.toString();
+    const allProposals = await proposalModels.find({ supervisorId: position }).lean();
+    
+    const modifiedProposals = allProposals.map((singleProposal, index) => {
+      return {
+        _id: singleProposal._id,
+        projectTitle: singleProposal.projectTitle,
+        projectTitle: singleProposal.projectTitle,
+        file: singleProposal.file,
+        isAccepted: singleProposal.isAccepted,
+        isRejected: singleProposal.isRejected,
+        isAccepetedByHOD: singleProposal.isAccepetedByHOD,
+        createdAt: singleProposal.createdAt,
+        updatedAt: singleProposal.updatedAt,
+      };
+    });
+    // console.log(modifiedProposals, "modified proposals");
+    return modifiedProposals;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "proposal service not available");
+    }
+  }
+}
+
+
 
 async function getSingle(data) {
   try {
@@ -152,4 +186,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, getSingle };
+module.exports = { create, get, getSingle,getIndividual };

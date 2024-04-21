@@ -13,6 +13,22 @@ const options = {
 };
 
 
+async function get() {
+  try {
+    console.log("inside user get service")
+    const users = await userModels.find({})
+    console.log(users,"uses");
+    return users;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      throw new ApiError(401, error?.message);
+    }
+  }
+}
+
 
 //sigup user services
 async function create(data) {
@@ -234,4 +250,4 @@ async function changePassword(req,res) {
   }
 }
 
-module.exports = { create, login, logout, tokenRefresh, changePassword };
+module.exports = { create, login, logout, tokenRefresh, changePassword,get };

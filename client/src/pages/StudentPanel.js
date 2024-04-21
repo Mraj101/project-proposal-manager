@@ -72,7 +72,7 @@ const StudentPanel = () => {
               </tr>
             </thead>
             {proposals.map((proposal) => (
-              <tbody>
+              <tbody key={proposal._id}>
                 <tr>
                   <td>{proposal.userName}</td>
                   <td>{proposal.projectTitle}</td>

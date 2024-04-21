@@ -1,24 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreateProposal = () => {
   const { usr, setUsr } = useAuthContext();
   const [loading, setLoading] = useState(false);
+  const [fileSelected, setFileSelected] = useState(false);
+  const [supervisors, setSupervisors] = useState([]);
+  
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     supervisorId: "", // This will store the selected supervisor's ID
     file: null,
   });
-  const [fileSelected, setFileSelected] = useState(false);
 
-  // List of supervisors with their IDs
-  const supervisors = [
-    { id: "1", name: "John Doe" },
-    { id: "2", name: "Jane Smith" },
-    // Add more supervisors as needed
-  ];
+  useEffect(() => {
+    // Fetch supervisors data when component mounts
+    async function fetchSupervisors() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/v1/newuser/get"
+        );
+        const filteredSupervisors = response.data.data.filter(
+          (supervisor) => supervisor.position === "2" || supervisor.position === "3"
+        );
+        setSupervisors(filteredSupervisors);
+      } catch (error) {
+        console.error("Error fetching supervisors:", error);
+      }
+    }
+    fetchSupervisors();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -68,6 +81,8 @@ const CreateProposal = () => {
       setLoading(false);
     }
   };
+
+  console.log("list of super visors",supervisors)
 
   return (
     <div className="w-full px-4 py-8 flex items-center justify-center">
@@ -122,10 +137,10 @@ const CreateProposal = () => {
               className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
               required
             >
-              <option value="" className=" font-bold">Supervisor</option>
+              <option value="" className="font-bold">Supervisor</option>
               {supervisors.map((supervisor) => (
-                <option key={supervisor.id} value={supervisor.id}>
-                  {supervisor.name}
+                <option key={supervisor._id} value={supervisor.userId}>
+                  {supervisor.username}
                 </option>
               ))}
             </select>

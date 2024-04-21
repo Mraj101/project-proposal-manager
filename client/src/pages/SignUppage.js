@@ -20,9 +20,7 @@ const Signup = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    // Your form submission logic
-  };
+
 
   return (
     <div className="signup-container flex items-center justify-center min-h-screen">
@@ -58,9 +56,5 @@ const Signup = () => {
 // const TeacherSignup = () => {
 //   // Your teacher signup form JSX
 // };
-
-const HODSignup = () => {
-  // Your HOD signup form JSX
-};
 
 export default Signup;
