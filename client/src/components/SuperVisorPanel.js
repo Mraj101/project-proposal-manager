@@ -12,7 +12,7 @@ const SuperVisorPanel = () => {
 
           <div className="w-full relative">
             <img
-              src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src="https://plus.unsplash.com/premium_photo-1661963411053-73f02c1a7105?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3VwZXJ2aXNvcnxlbnwwfHwwfHx8MA%3D%3D"
               className="w-full h-[400px] object-cover"
               alt="Not Found"
             />

@@ -3,22 +3,16 @@ import Hero from "../pages/Hero";
 const HodPanel = () => {
   return (
     <div className="">
-      {/* <Hero
-        imgURL={
-            "https://plus.unsplash.com/premium_photo-1675731938394-bf2f3abb4ee2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-        title={"Supervisor Dash"}
-      /> */}
-
+            <p>Hod panel</p>
           <div className="w-full relative">
             <img
-              src="https://images.unsplash.com/photo-1507537509458-b8312d35a233?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              src="https://media.istockphoto.com/id/1423164674/photo/african-american-female-teacher-in-school-hallway.webp?b=1&s=170667a&w=0&k=20&c=wTc3pp3Aq470DdWJT9pFpWEFkWfjxXCYO7ITfQ6y37I="
               className="w-full h-[400px] object-cover"
               alt="Not Found"
             />
             <div className="absolute inset-0 bg-black opacity-50 "></div>
-            <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute top-40 left-[310px] border-2 rounded-lg border-slate-100 px-4 py-2">
-              Student's Panel
+            <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 rounded-lg border-slate-100 px-4 py-2">
+              Dept Head 
             </h1>
             <div className="absolute inset-0 bg-black opacity-30 "></div>
           </div>
