@@ -30,6 +30,29 @@ async function createProposals(req, res) {
   }
 }
 
+async function updateProposal(req, res) {
+  try {
+    // console.log("Controller", req.body);
+    // console.log("file", req.file);
+    // console.log("hello proposal creating");
+    let response = await proposalService.update(req);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "proposals updated Successfully"));
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
 async function getAll(req, res) {
   try {
     // console.log("Controller", req.body);
@@ -132,4 +155,4 @@ async function getSingleBlog(req, res) {
   }
 }
 
-module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals };
+module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals,updateProposal };

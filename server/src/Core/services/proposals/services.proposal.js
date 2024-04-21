@@ -51,6 +51,27 @@ async function create(data) {
   }
 }
 
+async function update(data) {
+  try {
+    const proposalId= data.params;
+
+    const SingleProposal = await proposalModels.findByIdAndUpdate(proposalId,{
+      
+    })
+    // console.log(blogInstance,"bloginstance");
+    return proposalCreated;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "ProposalService not available");
+    }
+  }
+}
+
+
+
 // async function getAll() {
 //   try {
 //     const allBlogs = await proposalModels.find({}).lean();
@@ -94,20 +115,18 @@ async function create(data) {
 async function get(data) {
   try {
     console.log("inside get proposals",data.body);
-    const userId = data.body._id;
+    const allProposals = await proposalModels.find({}).lean();
+    // console.log("all proposals",allProposals);
 
-    const allProposals = await proposalModels.find({ user: userId }).lean();
-
-    const user = await userModels.findById(userId).lean();
+    const user = await userModels.find({}).lean();
 
     console.log("all blogs",allProposals);
     console.log("proposal of user",user);
 
     const modifiedProposals = allProposals.map((singleProposal, index) => {
+      const matchedUser = user.find((singleUser)=>singleProposal.user.toString() === singleUser._id.toString())
       return {
-        _id: singleProposal._id,
-        userImage: user.img,
-        userName: user.username,
+        ...matchedUser,
         ...singleProposal,
       };
     });
