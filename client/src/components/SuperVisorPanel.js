@@ -3,13 +3,6 @@ import Hero from "../pages/Hero";
 const SuperVisorPanel = () => {
   return (
     <div className="">
-      {/* <Hero
-        imgURL={
-            "https://plus.unsplash.com/premium_photo-1675731938394-bf2f3abb4ee2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-        title={"Supervisor Dash"}
-      /> */}
-
           <div className="w-full relative">
             <img
               src="https://plus.unsplash.com/premium_photo-1661963411053-73f02c1a7105?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3VwZXJ2aXNvcnxlbnwwfHwwfHx8MA%3D%3D"
@@ -17,8 +10,8 @@ const SuperVisorPanel = () => {
               alt="Not Found"
             />
             <div className="absolute inset-0 bg-black opacity-50 "></div>
-            <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute top-40 left-[310px] border-2 rounded-lg border-slate-100 px-4 py-2">
-              Student's Panel
+            <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 rounded-lg border-slate-100 px-4 py-2">
+              Supervisor's Panel
             </h1>
             <div className="absolute inset-0 bg-black opacity-30 "></div>
           </div>
