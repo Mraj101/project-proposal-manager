@@ -60,9 +60,9 @@ const Navbar = () => {
 
           {usr && (
             <Link to="/create">
-              <button className="border-2 border-blue-800 duration-700 hover:duration-700 hover:border-blue-300 hover:text-blue-300 text-blue-800 rounded-md p-1  px-4 font-bold">
+              {(usr?.position === "1")?(<button className="border-2 border-blue-800 duration-700 hover:duration-700 hover:border-blue-300 hover:text-blue-300 text-blue-800 rounded-md p-1  px-4 font-bold">
                create proposal
-              </button>
+              </button>):null}
             </Link>
           )}
 

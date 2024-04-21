@@ -13,7 +13,7 @@ const SuperVisorPanel = () => {
   const fetchProposals = async (receivedUsr) => {
     try {
       let data = {
-        "supervisorEmail": receivedUsr.email
+        "supervisorId": receivedUsr.userId
       }
       const response = await axios.post(
         "http://localhost:8000/api/v1/proposals/get/single",
@@ -21,7 +21,7 @@ const SuperVisorPanel = () => {
       );
       console.log(response);
       setProposals(response.data.data)
-      // const { data } = response.supervisorEmail;
+      // const { data } = response.supervisorId;
       // setProposals(data);
       // setLoading(false);
 

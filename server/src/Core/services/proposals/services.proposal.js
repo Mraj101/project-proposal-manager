@@ -128,9 +128,10 @@ async function get(data) {
 async function getIndividual(data) {
   try {
     const userEmail = data.body.supervisorEmail;
+    const supervisorId = data.body.supervisorId;
     const user = await userModels.findOne({email: userEmail}).lean();
     const position = user?.position.toString();
-    const allProposals = await proposalModels.find({ supervisorId: position }).lean();
+    const allProposals = await proposalModels.find({ supervisorId: supervisorId }).lean();
     
     const modifiedProposals = allProposals.map((singleProposal, index) => {
       return {
