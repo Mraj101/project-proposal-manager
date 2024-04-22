@@ -7,7 +7,7 @@ const CreateProposal = () => {
   const [loading, setLoading] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
   const [supervisors, setSupervisors] = useState([]);
-  
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -23,7 +23,8 @@ const CreateProposal = () => {
           "http://localhost:8000/api/v1/newuser/get"
         );
         const filteredSupervisors = response.data.data.filter(
-          (supervisor) => supervisor.position === "2" || supervisor.position === "3"
+          (supervisor) =>
+            supervisor.position === "2" || supervisor.position === "3"
         );
         setSupervisors(filteredSupervisors);
       } catch (error) {
@@ -32,7 +33,7 @@ const CreateProposal = () => {
     }
     fetchSupervisors();
   }, []);
-
+  //
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData((prevData) => ({
@@ -81,7 +82,7 @@ const CreateProposal = () => {
     }
   };
 
-  console.log("list of super visors",supervisors)
+  console.log("list of super visors", supervisors);
 
   return (
     <div className="w-full px-4 py-8 flex items-center justify-center">
@@ -136,7 +137,9 @@ const CreateProposal = () => {
               className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
               required
             >
-              <option value="" className="font-bold">Supervisor</option>
+              <option value="" className="font-bold">
+                Supervisor
+              </option>
               {supervisors.map((supervisor) => (
                 <option key={supervisor._id} value={supervisor.userId}>
                   {supervisor.username}
