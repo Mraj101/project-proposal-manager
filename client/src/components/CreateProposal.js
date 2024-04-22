@@ -39,7 +39,6 @@ const CreateProposal = () => {
       ...prevData,
       [name]: files ? files[0] : value,
     }));
-    // Set fileSelected to true when a file is chosen
     if (name === "file") {
       setFileSelected(true);
     }
