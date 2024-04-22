@@ -8,7 +8,7 @@ const HodPanel = () => {
 
   const fetchProposals = async () => {
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         "http://localhost:8000/api/v1/proposals/get"
       );
       setProposals(response.data.data);
@@ -32,9 +32,7 @@ const HodPanel = () => {
     } catch (error) {
       console.error("Error accepting proposal:", error);
     }
-  }; 
-  
-
+  };
 
   useEffect(() => {
     const userDataFromStorage = JSON.parse(localStorage.getItem("user"));
@@ -66,11 +64,15 @@ const HodPanel = () => {
         <table className="table">
           <thead className="border-b-2">
             <tr>
-              <th>Name</th>
+              <th>User Name</th>
+              <th>User Id</th>
+              <th>Deparment</th>
               <th>Project Title</th>
-              <th>Project Description</th>
+              <th>Project Details</th>
               <th>File</th>
-              <th>Date</th>
+              <th>Proposal Sending Date</th>
+              <th>Supervisor Name</th>
+              <th>Supervisor Approval</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -78,28 +80,52 @@ const HodPanel = () => {
             {proposals.map((proposal) => (
               <tr key={proposal._id}>
                 <td>{proposal.username}</td>
+                <td>{proposal.userId}</td>
+                <td>{proposal.department}</td>
                 <td>{proposal.projectTitle}</td>
                 <td>{proposal.description}</td>
                 <td>{proposal.file.substring(0, 10)}</td>
-                <td>{proposal.createdAt.split('T')[0]}</td>
+                <td>{proposal.createdAt.split("T")[0]}</td>
+                <td>{proposal.supervisorName}</td>
                 <td>
-                  {(proposal.isAccepted  &&
-                    proposal.isAccepetedByHOD) ? 
-                      (<span className="px-4 py-2 rounded-lg bg-green-400 text-white">
-                        Approved
-                      </span>
+                  {proposal.isAccepted === true ? (
+                    <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                      Approved
+                    </span>
                   ) : (
-                    <div className="flex gap-5">
-                      <button
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
-                        onClick={() => handleAcceptProposal(proposal._id)}
-                      >
-                        ✔️ Accept
-                      </button>
-                      <button  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white">
-                        ❌ Reject
-                      </button>
-                    </div>
+                    <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                      Pending
+                    </span>
+                  )}
+                </td>
+
+                <td>
+                  {proposal.isAccepted === true ? (
+                    <>
+                      <td>
+                        {proposal.isAccepted && proposal.isAccepetedByHOD ? (
+                          <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                            Approved
+                          </span>
+                        ) : (
+                          <div className="flex gap-5">
+                            <button
+                              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
+                              onClick={() => handleAcceptProposal(proposal._id)}
+                            >
+                              ✔️ Accept
+                            </button>
+                            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white">
+                              ❌ Reject
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </>
+                  ) : (
+                    <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                      Pending
+                    </span>
                   )}
                 </td>
               </tr>

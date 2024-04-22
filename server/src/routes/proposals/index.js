@@ -6,7 +6,8 @@ const multerMiddleware = require("../../middlewares/multer.middleware.js");
 
 router.post("/crt", multerMiddleware.single("file"), proposalController.createProposals);
 router.post("/crtdemo", multerMiddleware.single("file"), proposalController.createDemoproposal);
-router.get("/get", proposalController.getProposals);
+router.post("/get", proposalController.getProposals);
+router.get("/getdemo", proposalController.getDemoProposals);
 router.post("/update/:id", proposalController.updateProposal);
 router.post("/updatebyhod/:id", proposalController.updateByHod);
 // router.post("/get/single", proposalController.getSingleProposals)

@@ -3,6 +3,7 @@ const countModels = require("../../../models/count.models");
 const userModels = require("../../../models/user.models");
 const { ApiError } = require("../../../utils/ApiError");
 const { uploadOnCloudinary } = require("../../../utils/cloudinary");
+const proposalDemoModels = require("../../../models/proposalDemo.models");
 
 async function create(data) {
   try {
@@ -59,15 +60,15 @@ async function createDemo(data) {
 
     // console.log(imgOnCloudinary,"cloud image")
 
-    const { title, description, supervisorId, user } = data.body;
+    const { title,abstract,description, user } = data.body;
     const fileOnCloud = await uploadOnCloudinary(data.file.path);
 
     // console.log(fileOnCloud,"how file on cloud?");
     const fileUrl = fileOnCloud.url;
-    const proposalInstance = await proposalModels.create({
+    const proposalInstance = await proposalDemoModels.create({
       projectTitle: title,
       description,
-      supervisorId,
+      abstract,
       user,
       file: fileUrl,
     });
@@ -77,9 +78,8 @@ async function createDemo(data) {
     // console.log(userInstance,"userinstance");
 
     const proposalCreated = {
-      username: userInstance.username,
-      userImg: userInstance.img,
-      userEmail: userInstance.email,
+      username:userInstance.username,
+      userImage:userInstance.img,
       projectTitle: proposalInstance.projectTitle,
       description: proposalInstance.description,
       supervisorId: proposalInstance.supervisorId,
@@ -182,8 +182,53 @@ async function get(data) {
     // console.log("all proposals",allProposals);
 
     const user = await userModels.find({}).lean();
+    console.log(user);
 
     console.log("all blogs", allProposals);
+    console.log("proposal of user", user);
+
+    // const superVisorName = await 
+
+    const modifiedProposals = allProposals.map((singleProposal, index) => {
+      const matchedUser = user.find(
+        (singleUser) =>
+          singleProposal.user.toString() === singleUser._id.toString()
+      );
+
+      const superVisor = user.find(
+        (singleSupervisor) =>
+        singleSupervisor.userId.toString() === singleProposal.supervisorId.toString()
+      );
+      return {
+        supervisorName: superVisor?.username,
+        ...matchedUser,
+        ...singleProposal,
+      };
+    });
+    console.log(modifiedProposals, "modified proposals");
+
+    return modifiedProposals;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "proposal service not available");
+    }
+  }
+}
+
+
+async function getDemo(data) {
+  try {
+    console.log("inside get proposals", data.body);
+    const allProposals = await proposalDemoModels.find({}).lean();
+    // console.log("all proposals",allProposals);
+
+    const user = await userModels.find({}).lean();
+
+    console.log("all proposals", allProposals);
     console.log("proposal of user", user);
 
     const modifiedProposals = allProposals.map((singleProposal, index) => {
@@ -272,4 +317,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod };
+module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod, createDemo ,getDemo };

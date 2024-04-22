@@ -167,6 +167,34 @@ async function getProposals(req, res) {
   }
 }
 
+
+async function getDemoProposals(req, res) {
+  try {
+    // console.log("Controller", req.body);
+    console.log("hello");
+    let response = await proposalService.getDemo(req);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "get proposals"));
+  } catch (err) {
+    // console.log(err);
+    // let newError = createErrorMessage();
+    // newError.status = 500;
+    // newError.message = "User Control Service Internal Server Error";
+    // return res.send(newError);
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
 async function getSingleProposals(req, res){
   try{
     let response = await proposalService.getIndividual(req);
@@ -215,4 +243,4 @@ async function getSingleBlog(req, res) {
   }
 }
 
-module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals,updateProposal,updateByHod,createDemoproposal };
+module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals,updateProposal,updateByHod,createDemoproposal,getDemoProposals };

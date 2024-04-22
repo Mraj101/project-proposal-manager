@@ -9,7 +9,7 @@ const StudentPanel = () => {
 
   const fetchProposals = async (receivedUsr) => {
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         "http://localhost:8000/api/v1/proposals/get",
         receivedUsr
       );
@@ -56,23 +56,29 @@ const StudentPanel = () => {
               <thead className="border-b-2">
                 <tr>
                   <th>User Name</th>
+                  <th>User Id</th>
+                  <th>Deparment</th>
                   <th>Project Title</th>
                   <th>File</th>
                   <th>Proposal Sending Date</th>
+                  <th>Supervisor Name</th>
                   <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 {proposals.map((proposal) => (
                   <tr key={proposal._id}>
-                    <td>{proposal.userName}</td>
+                    <td>{proposal.username}</td>
+                    <td>{proposal.userId}</td>
+                    <td>{proposal.department}</td>
                     <td>{proposal.projectTitle}</td>
                     <td>{proposal.file}</td>
                     <td>{proposal.createdAt.split("T")[0]}</td>
+                    <td>{proposal.supervisorName}</td>
                     <td>
                       <button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">
-                        {proposal.isAccepted === false &&
-                        proposal.isAcceptedByHOD === false
+                        {proposal.isAccepted === false && proposal.isRejected === false &&
+                        proposal.isAccepetedByHOD === false
                           ? "Pending"
                           : "Accepted"}
                       </button>
