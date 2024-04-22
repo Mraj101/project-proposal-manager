@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from "react";
-import Proposal from "../components/Proposal";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const StudentPanel = () => {
   const [proposals, setProposals] = useState([]);
-  console.log(proposals);
   const { usr, setUsr } = useAuthContext();
-  const [isStatus, setIsStatus] = useState("");
   const [loading, setLoading] = useState(true);
 
   const fetchProposals = async (receivedUsr) => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         "http://localhost:8000/api/v1/proposals/get",
         receivedUsr
       );
       const { data } = response.data;
       setProposals(data);
       setLoading(false);
-
-      // if(proposals?.isAccepted === false && proposals?.isRejected === false && proposals?.isAccepetedByHOD === false){
-      //   setIsStatus("Pending");
-      // }else{
-      //   setIsStatus("Accepted");
-      // }
     } catch (error) {
       console.error("Error fetching proposals:", error);
     }
@@ -61,37 +52,36 @@ const StudentPanel = () => {
           </div>
 
           <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
-          <table className="table">
-            <thead className="border-b-2">
-              <tr>
-                <th>User Name</th>
-                <th>Project Title</th>
-                <th>File</th>
-                <th>Proposal Sending Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            {proposals.map((proposal) => (
-              <tbody key={proposal._id}>
+            <table className="table">
+              <thead className="border-b-2">
                 <tr>
-                  <td>{proposal.userName}</td>
-                  <td>{proposal.projectTitle}</td>
-                  <td>{proposal.file}</td>
-                  <td>{proposal.createdAt.split("T")[0]}</td>
-                  <td>
-                    <button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">
-                      {proposal.isAccepted === false &&
-                      proposal.isRejected === false &&
-                      proposal.isAccepetedByHOD === false
-                        ? "pending"
-                        : "accepted"}
-                    </button>
-                  </td>
+                  <th>User Name</th>
+                  <th>Project Title</th>
+                  <th>File</th>
+                  <th>Proposal Sending Date</th>
+                  <th>Status</th>
                 </tr>
+              </thead>
+              <tbody>
+                {proposals.map((proposal) => (
+                  <tr key={proposal._id}>
+                    <td>{proposal.userName}</td>
+                    <td>{proposal.projectTitle}</td>
+                    <td>{proposal.file}</td>
+                    <td>{proposal.createdAt.split("T")[0]}</td>
+                    <td>
+                      <button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">
+                        {proposal.isAccepted === false &&
+                        proposal.isAcceptedByHOD === false
+                          ? "Pending"
+                          : "Accepted"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
-            ))}
-          </table>
-        </div>
+            </table>
+          </div>
         </>
       )}
     </>
