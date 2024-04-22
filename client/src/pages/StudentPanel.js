@@ -19,7 +19,7 @@ const StudentPanel = () => {
       const { data } = response.data;
       setProposals(data);
       setLoading(false);
-
+      //
       // if(proposals?.isAccepted === false && proposals?.isRejected === false && proposals?.isAccepetedByHOD === false){
       //   setIsStatus("Pending");
       // }else{
