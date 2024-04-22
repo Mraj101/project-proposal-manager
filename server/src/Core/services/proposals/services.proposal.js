@@ -29,9 +29,9 @@ async function create(data) {
     // console.log(userInstance,"userinstance");
 
     const proposalCreated = {
-      username: userInstance.username,
-      userImg: userInstance.img,
-      userEmail: userInstance.email,
+      // username: userInstance.username,
+      // userImg: userInstance.img,
+      // userEmail: userInstance.email,
       projectTitle: proposalInstance.projectTitle,
       description: proposalInstance.description,
       supervisorId: proposalInstance.supervisorId,
@@ -139,12 +139,20 @@ async function get(data) {
     console.log("all blogs", allProposals);
     console.log("proposal of user", user);
 
+    // const superVisorName = await 
+
     const modifiedProposals = allProposals.map((singleProposal, index) => {
       const matchedUser = user.find(
         (singleUser) =>
           singleProposal.user.toString() === singleUser._id.toString()
       );
+
+      const superVisor = user.find(
+        (singleSupervisor) =>
+        singleSupervisor.userId.toString() === singleProposal.supervisorId.toString()
+      );
       return {
+        supervisorName: superVisor?.username,
         ...matchedUser,
         ...singleProposal,
       };

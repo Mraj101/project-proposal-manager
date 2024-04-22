@@ -60,16 +60,20 @@ const SuperVisorPanel = () => {
         </h1>
         <div className="absolute inset-0 bg-black opacity-30"></div>
       </div>
-  
+
       <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
         <table className="table">
           <thead className="border-b-2">
             <tr>
-              <th>Name</th>
+              <th>User Name</th>
+              <th>User Id</th>
+              <th>Gender</th>
+              <th>Session</th>
+              <th>Deparment</th>
               <th>Project Title</th>
-              <th>Project Description</th>
+              <th>Project Details</th>
               <th>File</th>
-              <th>Date</th>
+              <th>Proposal Sending Date</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -77,10 +81,14 @@ const SuperVisorPanel = () => {
             {proposals.map((proposal) => (
               <tr key={proposal._id}>
                 <td>{proposal.username}</td>
+                <td>{proposal.userId}</td>
+                <td>{proposal.gender}</td>
+                <td>{proposal.session}</td>
+                <td>{proposal.department}</td>
                 <td>{proposal.projectTitle}</td>
                 <td>{proposal.description}</td>
                 <td>{proposal.file.substring(0, 10)}</td>
-                <td>{proposal.createdAt.split('T')[0]}</td>
+                <td>{proposal.createdAt.split("T")[0]}</td>
                 <td colSpan={proposal.isAccepted ? "2" : "1"}>
                   {proposal.isAccepted ? (
                     <span className="px-4 py-2 rounded-lg bg-blue-400 text-white">
