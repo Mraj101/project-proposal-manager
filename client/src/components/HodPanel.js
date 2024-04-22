@@ -34,6 +34,23 @@ const HodPanel = () => {
     }
   };
 
+  const handleRejectProposal = async (proposalId) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/v1/proposals/rejectedbyhod/${proposalId}`,
+        { isRejectedByHOD: true }
+      );
+      const updatedProposal = response.data;
+      setProposals((prevProposals) =>
+        prevProposals.map((proposal) =>
+          proposal._id === updatedProposal._id ? updatedProposal : proposal
+        )
+      );
+    } catch (error) {
+      console.error("Error accepting proposal:", error);
+    }
+  };
+
   useEffect(() => {
     const userDataFromStorage = JSON.parse(localStorage.getItem("user"));
     if (userDataFromStorage) {
@@ -55,7 +72,7 @@ const HodPanel = () => {
         />
         <div className="absolute inset-0 bg-black opacity-50 "></div>
         <h1 className="text-center text-8xl font-extrabold text-slate-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 border-2 rounded-lg border-slate-100 px-4 py-2">
-          Dept Head
+          Department Head
         </h1>
         <div className="absolute inset-0 bg-black opacity-30 "></div>
       </div>
@@ -73,55 +90,81 @@ const HodPanel = () => {
               <th>Proposal Sending Date</th>
               <th>Supervisor Name</th>
               <th>Supervisor Approval</th>
+              <th>Action</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {proposals.map((proposal) => (
-              <tr key={proposal._id}>
-                <td>{proposal.username}</td>
-                <td>{proposal.userId}</td>
-                <td>{proposal.department}</td>
-                <td>{proposal.projectTitle}</td>
-                <td>{proposal.description}</td>
-                <td>{proposal.file.substring(0, 10)}</td>
-                <td>{proposal.createdAt.split("T")[0]}</td>
-                <td>{proposal.supervisorName}</td>
+              <tr key={proposal?._id}>
+                <td>{proposal?.username}</td>
+                <td>{proposal?.userId}</td>
+                <td>{proposal?.department}</td>
+                <td>{proposal?.projectTitle}</td>
+                <td>{proposal?.description}</td>
+                <td>{proposal?.file.substring(0, 10)}</td>
+                <td>{proposal?.createdAt.split("T")[0]}</td>
+                <td>{proposal?.supervisorName}</td>
                 <td>
-                  {proposal.isAccepted === true ? (
-                    <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                  {proposal?.isAccepted === true ? (
+                    <span className="px-4 py-2 rounded-lg bg-green-400 text-white">
                       Approved
                     </span>
                   ) : (
-                    <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                    <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
                       Pending
                     </span>
                   )}
                 </td>
-
                 <td>
-                  {proposal.isAccepted === true ? (
-                    <>
-                      <td>
-                        {proposal.isAccepted && proposal.isAccepetedByHOD ? (
-                          <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
-                            Approved
-                          </span>
-                        ) : (
-                          <div className="flex gap-5">
-                            <button
-                              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
-                              onClick={() => handleAcceptProposal(proposal._id)}
-                            >
-                              ✔️ Accept
-                            </button>
-                            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white">
-                              ❌ Reject
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </>
+                  {
+                    proposal.isAccepetedByHOD === false && proposal.isRejectedByHOD === false ? 
+                    (<div className="flex gap-5">
+                        <button
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
+                          onClick={() => handleAcceptProposal(proposal?._id)}
+                        >
+                          ✔️ Accept
+                        </button>
+                        <button
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white"
+                          onClick={() => handleRejectProposal(proposal?._id)}
+                        >
+                          ❌ Reject
+                        </button>
+                      </div>) : (<div className="flex gap-5">
+                        <button
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
+                          // onClick={() => handleAcceptProposal(proposal?._id)}
+                        >
+                          Accept
+                        </button>
+                        <button
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
+                          // onClick={() => handleRejectProposal(proposal?._id)}
+                        >
+                          Reject
+                        </button>
+                      </div>)
+                  }
+                </td>
+                <td>
+                  {proposal?.isRejected ? (
+                    <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                      Rejected
+                    </span>
+                  ) : proposal?.isAccepted ? (
+                    proposal?.isAcceptedByHOD === true ? (
+                      <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                        Approved
+                      </span>
+                    ) : proposal?.isRejectedByHOD ? (
+                      <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                        Rejected
+                      </span>
+                    ) : (
+                      <></>
+                    )
                   ) : (
                     <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
                       Pending

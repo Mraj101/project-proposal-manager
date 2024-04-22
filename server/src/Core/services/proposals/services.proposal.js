@@ -20,7 +20,7 @@ async function create(data) {
       projectTitle: title,
       description,
       supervisorId,
-      user,
+      // user,
       file: fileUrl,
     });
 
@@ -74,6 +74,24 @@ async function updatedByHod(data, id) {
     // console.log(data,"this is data");
     const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
       $set: { isAccepetedByHOD: true },
+    });
+    console.log(proposalInstance, "proposalInstance");
+    return proposalInstance;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "Proposal Update Service not available");
+    }
+  }
+}
+
+async function rejectedByHodsrv(data, id) {
+  try {
+    // console.log(data,"this is data");
+    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
+      $set: { isRejectedByHOD: true },
     });
     console.log(proposalInstance, "proposalInstance");
     return proposalInstance;
@@ -233,4 +251,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod };
+module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod, rejectedByHodsrv };

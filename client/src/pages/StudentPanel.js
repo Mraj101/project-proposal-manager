@@ -77,10 +77,13 @@ const StudentPanel = () => {
                     <td>{proposal.supervisorName}</td>
                     <td>
                       <button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">
-                        {proposal.isAccepted === false && proposal.isRejected === false &&
-                        proposal.isAccepetedByHOD === false
-                          ? "Pending"
-                          : "Accepted"}
+                        {proposal.isRejected
+                          ? "Rejected"
+                          : proposal.isAccepted && proposal.isAcceptedByHOD
+                          ? "Accepted"
+                          : proposal.isAccepted && proposal.isRejectedByHOD
+                          ? "Rejected"
+                          : "Pending"}
                       </button>
                     </td>
                   </tr>
