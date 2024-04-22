@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
-
+//
 const CreateProposal = () => {
   const { usr, setUsr } = useAuthContext();
   const [loading, setLoading] = useState(false);
