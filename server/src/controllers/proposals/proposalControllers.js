@@ -2,12 +2,41 @@ const proposalService = require("../../Core/services/proposals/index");
 const { ApiResponse } = require("../../utils/ApiResponse.js");
 const { ApiError } = require("../../utils/ApiError.js");
 
+
 async function createProposals(req, res) {
   try {
     console.log("Controller", req.body);
     console.log("file", req.file);
     console.log("hello proposal creating");
     let response = await proposalService.create(req);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "proposals created Successfully"));
+  } catch (err) {
+    // console.log(err);
+    // let newError = createErrorMessage();
+    // newError.status = 500;
+    // newError.message = "User Control Service Internal Server Error";
+    // return res.send(newError);
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
+async function createDemoproposal(req, res) {
+  try {
+    console.log("Controller", req.body);
+    console.log("file", req.file);
+    console.log("hello proposal creating");
+    let response = await proposalService.createDemo(req);
     return res
       .status(201)
       .json(new ApiResponse(200, response, "proposals created Successfully"));
@@ -83,6 +112,35 @@ async function getProposals(req, res) {
     }
   }
 }
+
+
+async function getDemoProposals(req, res) {
+  try {
+    // console.log("Controller", req.body);
+    console.log("hello");
+    let response = await proposalService.getDemo(req);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "get proposals"));
+  } catch (err) {
+    // console.log(err);
+    // let newError = createErrorMessage();
+    // newError.status = 500;
+    // newError.message = "User Control Service Internal Server Error";
+    // return res.send(newError);
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
 
 async function getSingleProposals(req, res){
   try{
@@ -215,4 +273,6 @@ async function getSingleBlog(req, res) {
   }
 }
 
-module.exports = { createProposals, getSingleBlog, getProposals, getAll, updateProposal, rejectByHod, updateByHod };
+
+
+module.exports = { createProposals, getSingleBlog, getProposals, getAll, updateProposal, rejectByHod, updateByHod,createDemoproposal,getDemoProposals };

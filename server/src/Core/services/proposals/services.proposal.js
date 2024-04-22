@@ -1,4 +1,5 @@
 const proposalModels = require("../../../models/proposals.models");
+const proposalDemoModels = require("../../../models/proposalDemo.models");
 const countModels = require("../../../models/count.models");
 const userModels = require("../../../models/user.models");
 const { ApiError } = require("../../../utils/ApiError");
@@ -12,16 +13,16 @@ async function create(data) {
     // console.log(imgOnCloudinary,"cloud image")
 
     const { title, description, supervisorId, user } = data.body;
-    const fileOnCloud = await uploadOnCloudinary(data.file.path);
+    // const fileOnCloud = await uploadOnCloudinary(data.file.path);
 
     // console.log(fileOnCloud,"how file on cloud?");
-    const fileUrl = fileOnCloud.url;
+    // const fileUrl = fileOnCloud.url;
     const proposalInstance = await proposalModels.create({
       projectTitle: title,
       description,
       supervisorId,
       user,
-      file: fileUrl,
+      file: data.file.filename,
     });
 
     const userInstance = await userModels.findById(data.body.user);
@@ -29,9 +30,9 @@ async function create(data) {
     // console.log(userInstance,"userinstance");
 
     const proposalCreated = {
-      // username: userInstance.username,
-      // userImg: userInstance.img,
-      // userEmail: userInstance.email,
+      username: userInstance.username,
+      userImg: userInstance.img,
+      userEmail: userInstance.email,
       projectTitle: proposalInstance.projectTitle,
       description: proposalInstance.description,
       supervisorId: proposalInstance.supervisorId,
@@ -50,6 +51,57 @@ async function create(data) {
     }
   }
 }
+
+
+async function createDemo(data) {
+  try {
+    console.log(data.file, "file");
+    console.log(data.body, "data body");
+
+    // console.log(imgOnCloudinary,"cloud image")
+
+    const { title, abstract, description, user } = data.body;
+    // const fileOnCloud = await uploadOnCloudinary(data.file.path);
+
+    // console.log(fileOnCloud,"how file on cloud?");
+    // const fileUrl = fileOnCloud.url;
+    const proposalInstance = await proposalDemoModels.create({
+      projectTitle: title,
+      description,
+      abstract,
+      user,
+      file: data.file.filename,
+    });
+
+
+    const userInstance = await userModels.findById(data.body.user);
+
+
+    // console.log(userInstance,"userinstance");
+
+    const proposalCreated = {
+      username: userInstance.username,
+      userImage: userInstance.img,
+      projectTitle: proposalInstance.projectTitle,
+      description: proposalInstance.description,
+      supervisorId: proposalInstance.supervisorId,
+      file: proposalInstance.file,
+      createdAt: proposalInstance.createdAt,
+      updatedAt: proposalInstance.updatedAt,
+    };
+    // console.log(blogInstance,"bloginstance");
+    return proposalCreated;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "ProposalService not available");
+    }
+  }
+}
+
+
 
 async function updatebySupervisor(data, id) {
   try {
@@ -189,6 +241,43 @@ async function get(data) {
   }
 }
 
+
+
+async function getDemo(data) {
+  try {
+    console.log("inside get proposals", data.body);
+    const allProposals = await proposalDemoModels.find({}).lean();
+    // console.log("all proposals",allProposals);
+
+    const user = await userModels.find({}).lean();
+
+    console.log("all proposals", allProposals);
+    console.log("proposal of user", user);
+
+    const modifiedProposals = allProposals.map((singleProposal, index) => {
+      const matchedUser = user.find(
+        (singleUser) =>
+          singleProposal.user.toString() === singleUser._id.toString()
+      );
+      return {
+        ...matchedUser,
+        ...singleProposal,
+      };
+    });
+    console.log(modifiedProposals, "modified proposals");
+
+    return modifiedProposals;
+  } catch (error) {
+    console.log(error);
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "proposal service not available");
+    }
+  }
+}
+
 async function getIndividual(data) {
   try {
     const userEmail = data.body.supervisorEmail;
@@ -251,4 +340,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod, rejectedByHodsrv };
+module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod, rejectedByHodsrv, getDemo, createDemo };
