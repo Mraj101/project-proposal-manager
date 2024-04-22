@@ -188,5 +188,5 @@ const CreateProposal = () => {
     </div>
   );
 };
-
+      
 export default CreateProposal;
