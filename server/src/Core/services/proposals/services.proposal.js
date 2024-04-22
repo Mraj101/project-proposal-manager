@@ -11,12 +11,18 @@ async function create(data) {
 
     // console.log(imgOnCloudinary,"cloud image")
 
-    const { title, description, supervisorId, user } = data.body;
+    const { username, userImage, studentId, department, userEmail,title, description, supervisorId, user } = data.body;
     const fileOnCloud = await uploadOnCloudinary(data.file.path);
 
     // console.log(fileOnCloud,"how file on cloud?");
     const fileUrl = fileOnCloud.url;
     const proposalInstance = await proposalModels.create({
+      username
+,
+      userImage,
+      studentId,
+      department,
+      userEmail,
       projectTitle: title,
       description,
       supervisorId,
@@ -50,43 +56,6 @@ async function create(data) {
     }
   }
 }
-
-async function updatebySupervisor(data, id) {
-  try {
-    // console.log(data,"this is data");
-    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
-      $set: { isAccepted: true },
-    });
-    console.log(proposalInstance, "proposalInstance");
-    return proposalInstance;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    } else {
-      console.log(error);
-      throw new ApiError(500, "Proposal Update Service not available");
-    }
-  }
-}
-
-async function updatedByHod(data, id) {
-  try {
-    // console.log(data,"this is data");
-    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
-      $set: { isAccepetedByHOD: true },
-    });
-    console.log(proposalInstance, "proposalInstance");
-    return proposalInstance;
-  } catch (error) {
-    if (error instanceof ApiError) {
-      throw error;
-    } else {
-      console.log(error);
-      throw new ApiError(500, "Proposal Update Service not available");
-    }
-  }
-}
-
 
 // async function getAll() {
 //   try {
@@ -127,24 +96,25 @@ async function updatedByHod(data, id) {
 //   }
 // }
 
-async function get(data) {
+
+async function get() {
   try {
-    console.log("inside get proposals", data.body);
+    // console.log("inside get proposals",data.body);
+    // const userId = data.body.supervisorId;
+    // console.log(userId, "Hiiiiiiii");
+
     const allProposals = await proposalModels.find({}).lean();
-    // console.log("all proposals",allProposals);
 
-    const user = await userModels.find({}).lean();
+    // const user = await userModels.findById(userId).lean();
 
-    console.log("all blogs", allProposals);
-    console.log("proposal of user", user);
+    // console.log("all blogs",allProposals);
+    // console.log("proposal of user",user);
 
     const modifiedProposals = allProposals.map((singleProposal, index) => {
-      const matchedUser = user.find(
-        (singleUser) =>
-          singleProposal.user.toString() === singleUser._id.toString()
-      );
       return {
-        ...matchedUser,
+        // _id: singleProposal?._id,
+        // userImage: user?.img,
+        // userName: user?.username,
         ...singleProposal,
       };
     });
@@ -162,41 +132,41 @@ async function get(data) {
   }
 }
 
-async function getIndividual(data) {
-  try {
-    const userEmail = data.body.supervisorEmail;
-    const supervisorId = data.body.supervisorId;
-    const user = await userModels.findOne({ email: userEmail }).lean();
-    const position = user?.position.toString();
-    const allProposals = await proposalModels
-      .find({ supervisorId: supervisorId })
-      .lean();
+// async function getIndividual(data) {
+//   try {
+//     const userEmail = data.body.supervisorEmail;
+//     const supervisorId = data.body.supervisorId;
+//     const user = await userModels.findOne({email: userEmail}).lean();
+//     const position = user?.position.toString();
+//     const allProposals = await proposalModels.find({ supervisorId: supervisorId }).lean();
+    
+//     const modifiedProposals = allProposals.map((singleProposal, index) => {
+//       return {
+//         _id: singleProposal._id,
+//         projectTitle: singleProposal.projectTitle,
+//         projectTitle: singleProposal.projectTitle,
+//         file: singleProposal.file,
+//         isAccepted: singleProposal.isAccepted,
+//         isRejected: singleProposal.isRejected,
+//         isAccepetedByHOD: singleProposal.isAccepetedByHOD,
+//         createdAt: singleProposal.createdAt,
+//         updatedAt: singleProposal.updatedAt,
+//       };
+//     });
+//     // console.log(modifiedProposals, "modified proposals");
+//     return modifiedProposals;
+//   } catch (error) {
+//     console.log(error);
+//     if (error instanceof ApiError) {
+//       throw error;
+//     } else {
+//       console.log(error);
+//       throw new ApiError(500, "proposal service not available");
+//     }
+//   }
+// }
 
-    const modifiedProposals = allProposals.map((singleProposal, index) => {
-      return {
-        _id: singleProposal._id,
-        projectTitle: singleProposal.projectTitle,
-        projectTitle: singleProposal.projectTitle,
-        file: singleProposal.file,
-        isAccepted: singleProposal.isAccepted,
-        isRejected: singleProposal.isRejected,
-        isAccepetedByHOD: singleProposal.isAccepetedByHOD,
-        createdAt: singleProposal.createdAt,
-        updatedAt: singleProposal.updatedAt,
-      };
-    });
-    // console.log(modifiedProposals, "modified proposals");
-    return modifiedProposals;
-  } catch (error) {
-    console.log(error);
-    if (error instanceof ApiError) {
-      throw error;
-    } else {
-      console.log(error);
-      throw new ApiError(500, "proposal service not available");
-    }
-  }
-}
+
 
 async function getSingle(data) {
   try {
@@ -224,4 +194,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod };
+module.exports = { create, get, getSingle };

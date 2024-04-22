@@ -1,5 +1,5 @@
-const proposalService = require('./services.proposal')
+const blogServices = require('./services.proposal')
 
 module.exports ={
-    ...proposalService
+    ...blogServices
 }
