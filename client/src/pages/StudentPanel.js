@@ -100,6 +100,7 @@ const StudentPanel = () => {
                     >
                       View Document
                     </a>
+
                   </div>
                   <div className="p-4 bg-gray-100 border-t border-gray-200">
                     <p className="text-sm text-gray-500">
