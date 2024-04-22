@@ -66,7 +66,11 @@ const proposalSchema = new mongoose.Schema(
     isAccepetedByHOD:{
       type: Boolean,
       default: false,
-    }
+    },
+    isRejectedByHOD:{
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

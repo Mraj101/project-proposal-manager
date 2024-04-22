@@ -86,33 +86,46 @@ const HodPanel = () => {
                 <td>{proposal.description}</td>
                 <td>{proposal.file.substring(0, 10)}</td>
                 <td>{proposal.createdAt.split("T")[0]}</td>
-                <td>{}</td>
+                <td>{proposal.supervisorName}</td>
                 <td>
-                  {
-                    proposal.isAccepted === true ?<span className="px-4 py-2 rounded-lg bg-green-400 text-white">
-                    Approved
-                  </span> : <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
-                      Pending
-                    </span>
-                  }
-                </td>
-                <td>
-                  {proposal.isAccepted && proposal.isAccepetedByHOD ? (
-                    <span className="px-4 py-2 rounded-lg bg-green-400 text-white">
+                  {proposal.isAccepted === true ? (
+                    <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
                       Approved
                     </span>
                   ) : (
-                    <div className="flex gap-5">
-                      <button
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
-                        onClick={() => handleAcceptProposal(proposal._id)}
-                      >
-                        ✔️ Accept
-                      </button>
-                      <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white">
-                        ❌ Reject
-                      </button>
-                    </div>
+                    <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                      Pending
+                    </span>
+                  )}
+                </td>
+
+                <td>
+                  {proposal.isAccepted === true ? (
+                    <>
+                      <td>
+                        {proposal.isAccepted && proposal.isAccepetedByHOD ? (
+                          <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                            Approved
+                          </span>
+                        ) : (
+                          <div className="flex gap-5">
+                            <button
+                              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
+                              onClick={() => handleAcceptProposal(proposal._id)}
+                            >
+                              ✔️ Accept
+                            </button>
+                            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white">
+                              ❌ Reject
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </>
+                  ) : (
+                    <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                      Pending
+                    </span>
                   )}
                 </td>
               </tr>
