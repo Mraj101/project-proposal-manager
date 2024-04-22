@@ -11,6 +11,7 @@ async function create(data) {
     console.log(data.body, "data body");
 
     // console.log(imgOnCloudinary,"cloud image")
+    
 
     const { title, description, supervisorId, user } = data.body;
     const fileOnCloud = await uploadOnCloudinary(data.file.path);

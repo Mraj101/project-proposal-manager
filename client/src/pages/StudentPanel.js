@@ -32,6 +32,28 @@ const StudentPanel = () => {
     fetchProposals(usr);
   }, [usr]);
 
+  const demoProposals=[
+    {
+        "_id": "66261c31b8a61b3f2521f85e",
+        "username": "nu",
+        "email": "nu@gmail.com",
+        "password": "$2b$10$9muayP3XTFhynh.B7q2t3.a/Mju9UnYg.RtyoNGhMhBcC17.ggG72",
+        "img": "http://res.cloudinary.com/dwq8fbgmg/image/upload/v1713762582/xemhwyvexxkehsck5uwb.jpg",
+        "userId": "111",
+        "session": null,
+        "department": "cse",
+        "position": "2",
+        "gender": "male",
+        "createdAt": "2024-04-22T08:13:37.955Z",
+        "updatedAt": "2024-04-22T08:13:37.955Z",
+        "__v": 0,
+        "projectTitle": "sdfdsf",
+        "description": "dfdfdf",
+        "abstract": "dfdfdfdf",
+        "file": "http://res.cloudinary.com/dwq8fbgmg/image/upload/v1713773617/ksqbhfndre4a3hakcjy3.pdf",
+        "user": "6625f1163ea8bc87b341c22e"
+    }
+]
   return (
     <>
       {loading ? (
@@ -49,6 +71,40 @@ const StudentPanel = () => {
               Student's Panel
             </h1>
             <div className="absolute inset-0 bg-black opacity-30 "></div>
+          </div>
+
+          <div className="m-5">
+            <p className="font-semibold mb-2">Show demo proposals:</p>
+            <div className="grid grid-cols-3 gap-4">
+              {demoProposals.map((demoProposal, index) => (
+                <div
+                  key={index}
+                  className="border border-gray-300 p-4 rounded-md"
+                >
+                  <h3 className="text-lg font-semibold mb-2">
+                    {demoProposal.projectTitle}
+                  </h3>
+                  <p className="mb-2">
+                    Description: {demoProposal.description}
+                  </p>
+                  <p className="mb-2">Abstract: {demoProposal.abstract}</p>
+                  <p className="mb-2">
+                    File:{" "}
+                    <a
+                      href={demoProposal.file}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View
+                    </a>
+                  </p>
+                  <p className="mb-2">User Name: {demoProposal.username}</p>
+                  <p className="mb-2">User ID: {demoProposal.userId}</p>
+                  <p className="mb-2">Department: {demoProposal.department}</p>
+                  {/* Add more details as needed */}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
@@ -77,7 +133,8 @@ const StudentPanel = () => {
                     <td>{proposal.supervisorName}</td>
                     <td>
                       <button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">
-                        {proposal.isAccepted === false && proposal.isRejected === false &&
+                        {proposal.isAccepted === false &&
+                        proposal.isRejected === false &&
                         proposal.isAccepetedByHOD === false
                           ? "Pending"
                           : "Accepted"}
