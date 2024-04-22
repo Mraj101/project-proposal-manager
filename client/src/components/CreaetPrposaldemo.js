@@ -2,36 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-const CreateProposal = () => {
+const CreaetPrposaldemo = () => {
   const { usr, setUsr } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
-  const [supervisors, setSupervisors] = useState([]);
-  
+
   const [formData, setFormData] = useState({
     title: "",
+    abstract: "",
     description: "",
-    supervisorId: "", // This will store the selected supervisor's ID
     file: null,
   });
-
-  useEffect(() => {
-    // Fetch supervisors data when component mounts
-    async function fetchSupervisors() {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/v1/newuser/get"
-        );
-        const filteredSupervisors = response.data.data.filter(
-          (supervisor) => supervisor.position === "2" || supervisor.position === "3"
-        );
-        setSupervisors(filteredSupervisors);
-      } catch (error) {
-        console.error("Error fetching supervisors:", error);
-      }
-    }
-    fetchSupervisors();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -49,14 +30,14 @@ const CreateProposal = () => {
     setLoading(true);
     const formInstance = new FormData();
     formInstance.append("title", formData.title);
+    formInstance.append("abstract", formData.abstract);
     formInstance.append("description", formData.description);
-    formInstance.append("supervisorId", formData.supervisorId);
     formInstance.append("file", formData.file);
     formInstance.append("user", usr._id);
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/proposals/crt",
+        "http://localhost:8000/api/v1/proposals/crtdemo",
         formInstance,
         {
           headers: {
@@ -69,8 +50,8 @@ const CreateProposal = () => {
       // Reset form data after successful submission
       setFormData({
         title: "",
+        abstract: "",
         description: "",
-        supervisorId: "",
         file: null,
       });
       // Reset fileSelected state
@@ -80,8 +61,6 @@ const CreateProposal = () => {
       setLoading(false);
     }
   };
-
-  console.log("list of super visors",supervisors)
 
   return (
     <div className="w-full px-4 py-8 flex items-center justify-center">
@@ -106,6 +85,23 @@ const CreateProposal = () => {
           </div>
           <div className="mb-4">
             <label
+              htmlFor="abstract"
+              className="block text-lg font-medium mb-2"
+            >
+              Abstract
+            </label>
+            <textarea
+              id="abstract"
+              name="abstract"
+              value={formData.abstract}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
+              rows="4"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
               htmlFor="description"
               className="block text-lg font-medium mb-2"
             >
@@ -120,29 +116,6 @@ const CreateProposal = () => {
               rows="6"
               required
             />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="supervisorId"
-              className="block text-lg font-medium mb-2"
-            >
-              Select Supervisor
-            </label>
-            <select
-              id="supervisorId"
-              name="supervisorId"
-              value={formData.supervisorId}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
-              required
-            >
-              <option value="" className="font-bold">Supervisor</option>
-              {supervisors.map((supervisor) => (
-                <option key={supervisor._id} value={supervisor.userId}>
-                  {supervisor.username}
-                </option>
-              ))}
-            </select>
           </div>
           <div className="mb-4">
             <label htmlFor="file" className="block text-lg font-medium mb-2">
@@ -186,6 +159,4 @@ const CreateProposal = () => {
   );
 };
 
-export default CreateProposal;
-
- 
+export default CreaetPrposaldemo;

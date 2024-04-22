@@ -51,6 +51,54 @@ async function create(data) {
   }
 }
 
+
+async function createDemo(data) {
+  try {
+    console.log(data.file, "file");
+    console.log(data.body, "data body");
+
+    // console.log(imgOnCloudinary,"cloud image")
+
+    const { title, description, supervisorId, user } = data.body;
+    const fileOnCloud = await uploadOnCloudinary(data.file.path);
+
+    // console.log(fileOnCloud,"how file on cloud?");
+    const fileUrl = fileOnCloud.url;
+    const proposalInstance = await proposalModels.create({
+      projectTitle: title,
+      description,
+      supervisorId,
+      user,
+      file: fileUrl,
+    });
+
+    const userInstance = await userModels.findById(data.body.user);
+
+    // console.log(userInstance,"userinstance");
+
+    const proposalCreated = {
+      username: userInstance.username,
+      userImg: userInstance.img,
+      userEmail: userInstance.email,
+      projectTitle: proposalInstance.projectTitle,
+      description: proposalInstance.description,
+      supervisorId: proposalInstance.supervisorId,
+      file: proposalInstance.file,
+      createdAt: proposalInstance.createdAt,
+      updatedAt: proposalInstance.updatedAt,
+    };
+    // console.log(blogInstance,"bloginstance");
+    return proposalCreated;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "ProposalService not available");
+    }
+  }
+}
+
 async function updatebySupervisor(data, id) {
   try {
     // console.log(data,"this is data");

@@ -65,6 +65,13 @@ const Navbar = () => {
               </button>):null}
             </Link>
           )}
+          {usr && (
+            <Link to="/createDemo">
+              {(usr?.position === "2")?(<button className="border-2 border-blue-800 duration-700 hover:duration-700 hover:border-blue-300 hover:text-blue-300 text-blue-800 rounded-md p-1  px-4 font-bold">
+               create demoProposal
+              </button>):null}
+            </Link>
+          )}
 
           {!usr && (
             <Link to="/login">

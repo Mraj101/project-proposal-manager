@@ -14,6 +14,7 @@ import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import UserProfile from "./components/userProfile";
 import SuperVisorPanel from "./components/SuperVisorPanel";
+import CreaetPrposaldemo from "./components/CreaetPrposaldemo";
 
 function App() {
   const { user } = useAuthContext(AuthContext);
@@ -32,6 +33,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route index element={<HomeLayout />} />
             <Route path="/create" element={<CreateProposal />} />
+            <Route path="/createDemo" element={<CreaetPrposaldemo />} />
             {/* <Route path="/blogs/:id" element={<SingleBlog />} /> */}
             <Route path="/userProfile" element={<UserProfile />} />
             <Route path="/supervisor" element={<SuperVisorPanel/>} />
