@@ -91,7 +91,7 @@ const HodPanel = () => {
               <th>Supervisor Name</th>
               <th>Supervisor Approval</th>
               <th>Action</th>
-              <th>Status</th>
+              <th>HOD Status</th>
             </tr>
           </thead>
           <tbody>
@@ -106,70 +106,102 @@ const HodPanel = () => {
                 <td>{proposal?.createdAt.split("T")[0]}</td>
                 <td>{proposal?.supervisorName}</td>
                 <td>
-                  {proposal?.isAccepted === true ? (
+                  {proposal?.isAccepted === true && (
                     <span className="px-4 py-2 rounded-lg bg-green-400 text-white">
                       Approved
                     </span>
-                  ) : (
-                    <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
-                      Pending
+                  )}
+
+                  {proposal?.isAccepted === false &&
+                    proposal?.isRejected === false && (
+                      <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
+                        pending
+                      </span>
+                    )}
+
+                  {proposal?.isRejected === true && (
+                    <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                      rejected
                     </span>
                   )}
                 </td>
                 <td>
-                  {
-                    proposal.isAccepetedByHOD === false && proposal.isRejectedByHOD === false ? 
-                    (<div className="flex gap-5">
+                  {((proposal?.isRejected === false &&
+                    proposal.isAccepted === false) || (proposal?.isAccepetedByHOD === true && proposal?.isAccepted === true) || (proposal?.isRejected === true && proposal?.isRejectedByHOD === true) || (proposal?.isRejected === true && proposal?.isAccepted === false && proposal?.isAccepetedByHOD === false && proposal?.isRejectedByHOD === false) || (proposal?.isAccepted === true && proposal?.isRejectedByHOD === true && proposal?.isAccepetedByHOD === false)) && (
+                      <div className="flex gap-5">
                         <button
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
-                          onClick={() => handleAcceptProposal(proposal?._id)}
-                        >
-                          ✔️ Accept
-                        </button>
-                        <button
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white"
-                          onClick={() => handleRejectProposal(proposal?._id)}
-                        >
-                          ❌ Reject
-                        </button>
-                      </div>) : (<div className="flex gap-5">
-                        <button
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
+                          className="flex items-center gap-2 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
                           // onClick={() => handleAcceptProposal(proposal?._id)}
                         >
                           Accept
                         </button>
                         <button
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
+                          className="flex items-center gap-2 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
                           // onClick={() => handleRejectProposal(proposal?._id)}
                         >
                           Reject
                         </button>
-                      </div>)
-                  }
+                      </div>
+                    )}
+
+                  {(proposal?.isAccepted === true && proposal?.isAccepetedByHOD === false && proposal?.isRejectedByHOD === false) && (
+                    <div className="flex gap-5">
+                      <button
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
+                        onClick={() => handleAcceptProposal(proposal?._id)}
+                      >
+                        ✔️ Accept
+                      </button>
+                      <button
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white"
+                        onClick={() => handleRejectProposal(proposal?._id)}
+                      >
+                        ❌ Reject
+                      </button>
+                    </div>
+                  )}
                 </td>
                 <td>
-                  {proposal?.isRejected ? (
-                    <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
-                      Rejected
-                    </span>
-                  ) : proposal?.isAccepted ? (
-                    proposal?.isAcceptedByHOD === true ? (
-                      <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
-                        Approved
-                      </span>
-                    ) : proposal?.isRejectedByHOD ? (
-                      <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
-                        Rejected
-                      </span>
-                    ) : (
-                      <></>
-                    )
-                  ) : (
-                    <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
-                      Pending
+                  {proposal?.isAccepted && proposal?.isAccepetedByHOD && (
+                    <span className="px-4 py-2 rounded-lg bg-green-400 text-white">
+                      Approved
                     </span>
                   )}
+
+                  {(proposal?.isAccepted === false && proposal?.isRejected === false && proposal?.isAccepetedByHOD === false && proposal?.isRejectedByHOD === false) && (
+                    <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
+                    Pending
+                  </span>
+                  )}
+
+                  {(proposal?.isAccepted === true && proposal?.isRejected === false && proposal?.isAccepetedByHOD === false && proposal?.isRejectedByHOD === false) && (
+                    <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
+                    pending
+                  </span>
+                  ) }
+
+                  {
+                    proposal?.isRejected && (
+                      <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                      Rejected
+                    </span>
+                    )
+                  }
+
+                  {/* {(proposal?.isAccepted === true ||
+                    proposal?.isRejected === true) && (
+                    <span className="px-4 py-2 rounded-lg bg-slate-400 text-white">
+                      pending
+                    </span>
+                  )} */}
+
+                  {proposal?.isAccepted === true &&
+                    proposal?.isRejectedByHOD === true && (
+                      <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                        rejected
+                      </span>
+                    )}
+                    
                 </td>
               </tr>
             ))}
