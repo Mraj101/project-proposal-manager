@@ -12,14 +12,14 @@ const StudentPanel = () => {
 
   const fetchProposals = async (receivedUsr) => {
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         "http://localhost:8000/api/v1/proposals/get",
         receivedUsr
       );
       const { data } = response.data;
       setProposals(data);
       setLoading(false);
-      //
+
       // if(proposals?.isAccepted === false && proposals?.isRejected === false && proposals?.isAccepetedByHOD === false){
       //   setIsStatus("Pending");
       // }else{
