@@ -61,7 +61,7 @@ async function getProposals(req, res) {
   try {
     // console.log("Controller", req.body);
     console.log("hello");
-    let response = await proposalService.get();
+    let response = await proposalService.get(req);
     return res
       .status(201)
       .json(new ApiResponse(200, response, "get proposals"));
