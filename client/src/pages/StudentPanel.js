@@ -72,7 +72,7 @@ const StudentPanel = () => {
                     <td>{proposal.userId}</td>
                     <td>{proposal.department}</td>
                     <td>{proposal.projectTitle}</td>
-                    <td>{proposal.file}</td>
+                    <td><a href={`http://localhost:8000/files/${proposal.file}`}>view document</a></td>
                     <td>{proposal.createdAt.split("T")[0]}</td>
                     <td>{proposal.supervisorName}</td>
                     <td>
