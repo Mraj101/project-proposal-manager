@@ -11,19 +11,18 @@ async function create(data) {
     console.log(data.body, "data body");
 
     // console.log(imgOnCloudinary,"cloud image")
-    
 
     const { title, description, supervisorId, user } = data.body;
-    const fileOnCloud = await uploadOnCloudinary(data.file.path);
+    // const fileOnCloud = await uploadOnCloudinary(data.file.path);
 
     // console.log(fileOnCloud,"how file on cloud?");
-    const fileUrl = fileOnCloud.url;
+    // const fileUrl = fileOnCloud.url;
     const proposalInstance = await proposalModels.create({
       projectTitle: title,
       description,
       supervisorId,
       user,
-      file: fileUrl,
+      file: data.file.filename,
     });
 
     const userInstance = await userModels.findById(data.body.user);
@@ -53,7 +52,6 @@ async function create(data) {
   }
 }
 
-
 async function createDemo(data) {
   try {
     console.log(data.file, "file");
@@ -61,7 +59,7 @@ async function createDemo(data) {
 
     // console.log(imgOnCloudinary,"cloud image")
 
-    const { title,abstract,description, user } = data.body;
+    const { title, abstract, description, user } = data.body;
     const fileOnCloud = await uploadOnCloudinary(data.file.path);
 
     // console.log(fileOnCloud,"how file on cloud?");
@@ -79,8 +77,8 @@ async function createDemo(data) {
     // console.log(userInstance,"userinstance");
 
     const proposalCreated = {
-      username:userInstance.username,
-      userImage:userInstance.img,
+      username: userInstance.username,
+      userImage: userInstance.img,
       projectTitle: proposalInstance.projectTitle,
       description: proposalInstance.description,
       supervisorId: proposalInstance.supervisorId,
@@ -136,7 +134,6 @@ async function updatedByHod(data, id) {
   }
 }
 
-
 // async function getAll() {
 //   try {
 //     const allBlogs = await proposalModels.find({}).lean();
@@ -188,7 +185,7 @@ async function get(data) {
     console.log("all blogs", allProposals);
     console.log("proposal of user", user);
 
-    // const superVisorName = await 
+    // const superVisorName = await
 
     const modifiedProposals = allProposals.map((singleProposal, index) => {
       const matchedUser = user.find(
@@ -198,7 +195,8 @@ async function get(data) {
 
       const superVisor = user.find(
         (singleSupervisor) =>
-        singleSupervisor.userId.toString() === singleProposal.supervisorId.toString()
+          singleSupervisor.userId.toString() ===
+          singleProposal.supervisorId.toString()
       );
       return {
         supervisorName: superVisor?.username,
@@ -219,7 +217,6 @@ async function get(data) {
     }
   }
 }
-
 
 async function getDemo(data) {
   try {
@@ -318,4 +315,13 @@ async function getSingle(data) {
   }
 }
 
-module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod, createDemo ,getDemo };
+module.exports = {
+  create,
+  get,
+  updatebySupervisor,
+  getSingle,
+  getIndividual,
+  updatedByHod,
+  createDemo,
+  getDemo,
+};

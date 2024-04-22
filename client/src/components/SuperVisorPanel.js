@@ -87,7 +87,15 @@ const SuperVisorPanel = () => {
                 <td>{proposal.department}</td>
                 <td>{proposal.projectTitle}</td>
                 <td>{proposal.description}</td>
-                <td>{proposal.file.substring(0, 10)}</td>
+                {/* <td>{proposal.file}</td> */}
+                <td>
+                  <a
+                    href={`http://localhost:8000/files/${proposal.file}`}
+                    target="_blank"
+                  >
+                    Open File in New Tab
+                  </a>
+                </td>
                 <td>{proposal.createdAt.split("T")[0]}</td>
                 <td colSpan={proposal.isAccepted ? "2" : "1"}>
                   {proposal.isAccepted ? (
