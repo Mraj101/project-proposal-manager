@@ -35,6 +35,23 @@ const SuperVisorPanel = () => {
     }
   };
 
+  const handleRejectProposal = async (proposalId) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8000/api/v1/proposals/rejected/${proposalId}`,
+        { isRejected: true }
+      );
+      const updatedProposal = response.data;
+      setProposals((prevProposals) =>
+        prevProposals.map((proposal) =>
+          proposal._id === updatedProposal._id ? updatedProposal : proposal
+        )
+      );
+    } catch (error) {
+      console.error("Error rejecting proposal:", error);
+    }
+  };
+
   useEffect(() => {
     const userDataFromStorage = JSON.parse(localStorage.getItem("user"));
     if (userDataFromStorage) {
@@ -60,7 +77,7 @@ const SuperVisorPanel = () => {
         </h1>
         <div className="absolute inset-0 bg-black opacity-30"></div>
       </div>
-
+      
       <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
         <table className="table">
           <thead className="border-b-2">
@@ -69,7 +86,7 @@ const SuperVisorPanel = () => {
               <th>User Id</th>
               <th>Gender</th>
               <th>Session</th>
-              <th>Deparment</th>
+              <th>Department</th>
               <th>Project Title</th>
               <th>Project Details</th>
               <th>File</th>
@@ -94,6 +111,11 @@ const SuperVisorPanel = () => {
                     <span className="px-4 py-2 rounded-lg bg-blue-400 text-white">
                       Sent to HOD
                     </span>
+                  ) : 
+                  proposal.isRejected? (
+                    <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                      Rejected
+                    </span>
                   ) : (
                     <div className="flex gap-5">
                       <button
@@ -102,7 +124,10 @@ const SuperVisorPanel = () => {
                       >
                         ✔️ Accept
                       </button>
-                      <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white">
+                      <button
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white"
+                        onClick={() => handleRejectProposal(proposal._id)}
+                      >
                         ❌ Reject
                       </button>
                     </div>

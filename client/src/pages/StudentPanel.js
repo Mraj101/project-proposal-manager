@@ -66,7 +66,7 @@ const StudentPanel = () => {
             <div className="absolute inset-0 bg-black opacity-30 "></div>
           </div>
 
-          {/* checkout the demo proposals */}
+    
           <div className="m-20">
             <h1 className="font-bold text-3xl text-center underline">
               Previously submitted proposals
@@ -145,10 +145,10 @@ const StudentPanel = () => {
                       <td>{proposal.createdAt.split("T")[0]}</td>
                       <td>{proposal.supervisorName}</td>
                       <td>
-                        <button className="bg-slate-300 px-4 py-2 rounded-lg text-slate-100 font-extrabold">
+                        <button disabled className={`bg-slate-300 px-4 py-2 ${(proposal.isAccepted && proposal.isAccepetedByHOD) && "bg-green-500"} rounded-lg text-slate-100 font-extrabold`}>
                           {proposal.isRejected
                             ? "Rejected"
-                            : proposal.isAccepted && proposal.isAcceptedByHOD
+                            : proposal.isAccepted && proposal.isAccepetedByHOD
                             ? "Accepted"
                             : proposal.isAccepted && proposal.isRejectedByHOD
                             ? "Rejected"

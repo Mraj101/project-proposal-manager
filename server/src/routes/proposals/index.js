@@ -10,6 +10,7 @@ router.post("/get", proposalController.getProposals);
 router.get("/getdemo", proposalController.getDemoProposals);
 router.post("/update/:id", proposalController.updateProposal);
 router.post("/updatebyhod/:id", proposalController.updateByHod);
+router.post("/rejected/:id", proposalController.rejected);
 router.post("/rejectedbyhod/:id", proposalController.rejectByHod);
 // router.post("/get/single", proposalController.getSingleProposals);
 // router.get("/getAll", blogController.getAll);
