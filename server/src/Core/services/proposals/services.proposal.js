@@ -60,16 +60,16 @@ async function createDemo(data) {
     // console.log(imgOnCloudinary,"cloud image")
 
     const { title, abstract, description, user } = data.body;
-    const fileOnCloud = await uploadOnCloudinary(data.file.path);
+    // const fileOnCloud = await uploadOnCloudinary(data.file.path);
 
     // console.log(fileOnCloud,"how file on cloud?");
-    const fileUrl = fileOnCloud.url;
+    // const fileUrl = fileOnCloud.url;
     const proposalInstance = await proposalDemoModels.create({
       projectTitle: title,
       description,
       abstract,
       user,
-      file: fileUrl,
+      file: data.file.filename,
     });
 
     const userInstance = await userModels.findById(data.body.user);
