@@ -1,9 +1,9 @@
 const proposalModels = require("../../../models/proposals.models");
+const proposalDemoModels = require("../../../models/proposalDemo.models");
 const countModels = require("../../../models/count.models");
 const userModels = require("../../../models/user.models");
 const { ApiError } = require("../../../utils/ApiError");
 const { uploadOnCloudinary } = require("../../../utils/cloudinary");
-const proposalDemoModels = require("../../../models/proposalDemo.models");
 
 async function create(data) {
   try {
@@ -72,7 +72,9 @@ async function createDemo(data) {
       file: data.file.filename,
     });
 
+
     const userInstance = await userModels.findById(data.body.user);
+
 
     // console.log(userInstance,"userinstance");
 
@@ -97,6 +99,8 @@ async function createDemo(data) {
     }
   }
 }
+
+
 
 async function updatebySupervisor(data, id) {
   try {
@@ -133,6 +137,25 @@ async function updatedByHod(data, id) {
     }
   }
 }
+
+async function rejectedByHodsrv(data, id) {
+  try {
+    // console.log(data,"this is data");
+    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
+      $set: { isRejectedByHOD: true },
+    });
+    console.log(proposalInstance, "proposalInstance");
+    return proposalInstance;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    } else {
+      console.log(error);
+      throw new ApiError(500, "Proposal Update Service not available");
+    }
+  }
+}
+
 
 // async function getAll() {
 //   try {
@@ -185,7 +208,7 @@ async function get(data) {
     console.log("all blogs", allProposals);
     console.log("proposal of user", user);
 
-    // const superVisorName = await
+    // const superVisorName = await 
 
     const modifiedProposals = allProposals.map((singleProposal, index) => {
       const matchedUser = user.find(
@@ -195,8 +218,7 @@ async function get(data) {
 
       const superVisor = user.find(
         (singleSupervisor) =>
-          singleSupervisor.userId.toString() ===
-          singleProposal.supervisorId.toString()
+        singleSupervisor.userId.toString() === singleProposal.supervisorId.toString()
       );
       return {
         supervisorName: superVisor?.username,
@@ -217,6 +239,8 @@ async function get(data) {
     }
   }
 }
+
+
 
 async function getDemo(data) {
   try {
@@ -315,13 +339,4 @@ async function getSingle(data) {
   }
 }
 
-module.exports = {
-  create,
-  get,
-  updatebySupervisor,
-  getSingle,
-  getIndividual,
-  updatedByHod,
-  createDemo,
-  getDemo,
-};
+module.exports = { create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod, rejectedByHodsrv, getDemo, createDemo };

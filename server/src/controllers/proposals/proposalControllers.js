@@ -2,6 +2,7 @@ const proposalService = require("../../Core/services/proposals/index");
 const { ApiResponse } = require("../../utils/ApiResponse.js");
 const { ApiError } = require("../../utils/ApiError.js");
 
+
 async function createProposals(req, res) {
   try {
     console.log("Controller", req.body);
@@ -57,49 +58,21 @@ async function createDemoproposal(req, res) {
   }
 }
 
-async function updateProposal(req, res) {
+async function createDemoproposal(req, res) {
   try {
-
-    // console.log("Controller update pro", req.body);
-    // console.log("Controller update pro", req.params);
-    // console.log("file", req.file);
-    // console.log("hello proposal creating");
-
-    const {id} = req.params;
-    const {data} = req.body;
-    let response = await proposalService.updatebySupervisor(data,id);
+    console.log("Controller", req.body);
+    console.log("file", req.file);
+    console.log("hello proposal creating");
+    let response = await proposalService.createDemo(req);
     return res
       .status(201)
-      .json(new ApiResponse(200, response, "proposals updated Successfully"));
+      .json(new ApiResponse(200, response, "proposals created Successfully"));
   } catch (err) {
-    if (err instanceof ApiError) {
-      return res
-        .status(err.statusCode)
-        .json(new ApiResponse(err.statusCode, null, err.message));
-    } else {
-      console.error(err);
-      return res
-        .status(500)
-        .json(new ApiResponse(500, null, "Internal Server Error"));
-    }
-  }
-}
-
-async function updateByHod(req, res) {
-  try {
-    
-    // console.log("Controller update pro", req.body);
-    // console.log("Controller update pro", req.params);
-    // console.log("file", req.file);
-    // console.log("hello proposal creating");
-
-    const {id} = req.params;
-    const {data} = req.body;
-    let response = await proposalService.updatedByHod(data,id);
-    return res
-      .status(201)
-      .json(new ApiResponse(200, response, "proposals updated Successfully"));
-  } catch (err) {
+    // console.log(err);
+    // let newError = createErrorMessage();
+    // newError.status = 500;
+    // newError.message = "User Control Service Internal Server Error";
+    // return res.send(newError);
     if (err instanceof ApiError) {
       return res
         .status(err.statusCode)
@@ -214,6 +187,89 @@ async function getSingleProposals(req, res){
     }
   }
 }
+async function updateProposal(req, res) {
+  try {
+
+    // console.log("Controller update pro", req.body);
+    // console.log("Controller update pro", req.params);
+    // console.log("file", req.file);
+    // console.log("hello proposal creating");
+
+    const {id} = req.params;
+    const {data} = req.body;
+    let response = await proposalService.updatebySupervisor(data,id);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "proposals updated Successfully"));
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
+async function updateByHod(req, res) {
+  try {
+    
+    // console.log("Controller update pro", req.body);
+    // console.log("Controller update pro", req.params);
+    // console.log("file", req.file);
+    // console.log("hello proposal creating");
+
+    const {id} = req.params;
+    const {data} = req.body;
+    let response = await proposalService.updatedByHod(data,id);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "proposals updated Successfully"));
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
+
+async function rejectByHod(req, res) {
+  try {
+    
+    // console.log("Controller update pro", req.body);
+    // console.log("Controller update pro", req.params);
+    // console.log("file", req.file);
+    // console.log("hello proposal creating");
+
+    const {id} = req.params;
+    const {data} = req.body;
+    let response = await proposalService.rejectedByHodsrv(data,id);
+    return res
+      .status(201)
+      .json(new ApiResponse(200, response, "proposals updated Successfully"));
+  } catch (err) {
+    if (err instanceof ApiError) {
+      return res
+        .status(err.statusCode)
+        .json(new ApiResponse(err.statusCode, null, err.message));
+    } else {
+      console.error(err);
+      return res
+        .status(500)
+        .json(new ApiResponse(500, null, "Internal Server Error"));
+    }
+  }
+}
 
 async function getSingleBlog(req, res) {
   try {
@@ -243,4 +299,6 @@ async function getSingleBlog(req, res) {
   }
 }
 
-module.exports = { createProposals, getSingleBlog, getProposals, getAll,getSingleProposals,updateProposal,updateByHod,createDemoproposal,getDemoProposals };
+
+
+module.exports = { createProposals, getSingleBlog, getProposals, getAll, updateProposal, rejectByHod, updateByHod,createDemoproposal,getDemoProposals };
