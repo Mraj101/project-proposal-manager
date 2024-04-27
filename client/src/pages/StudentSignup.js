@@ -67,7 +67,7 @@ if(loading){
 
       // console.log(res?.data?.success=== true, "RRESPONSEEEEEEE");
 
-      if(res?.data?.success=== true){
+      if(res?.data?.success === true){
         Swal.fire("Successfully Signed Up");
         navigate('/login');
       }
