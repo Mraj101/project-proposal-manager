@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
         },
         img: {
             type: String,
-            required: true,
+            default: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
         },
         userId: {
             type: String,
