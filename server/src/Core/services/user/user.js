@@ -53,7 +53,7 @@ async function create(data) {
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const imgOnCloudinary = await uploadOnCloudinary(data.file.path)
+    const imgOnCloudinary = await uploadOnCloudinary(data.file.path);
     const user = await userModels.create({
       department,
       userId,
@@ -61,7 +61,7 @@ async function create(data) {
       email,
       password: hash,
       username: username.toLowerCase(),
-      img:imgOnCloudinary.url,
+      img:imgOnCloudinary?.url,
       gender,
       position,
     });
