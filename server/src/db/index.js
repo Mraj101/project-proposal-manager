@@ -3,9 +3,9 @@ const { dbName } = require("../constants.js");
 
 const DbConnect = async () => {
   try {
-    // console.log(`${process.env.CONNECTION_URI}/${dbName}`);
+    console.log(`${process.env.CONNECTION_URI}/${dbName}`,"hi");
     let connectionInstance = await mongoose.connect(
-      `${process.env.CONNECTION_URI}`, { dbName: `${dbName}` }
+      `${process.env.CONNECTION_URI}`, { dbName:`${dbName}`}
     );
     console.log(
       "Connected to MongoDB, !! HOST:",
