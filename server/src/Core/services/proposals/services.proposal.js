@@ -107,7 +107,7 @@ async function updatebySupervisor(data, id) {
     // console.log(data,"this is data");
     const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
       $set: { isAccepted: true },
-    });
+    },{new:true});
     console.log(proposalInstance, "proposalInstance");
     return proposalInstance;
   } catch (error) {
@@ -125,7 +125,7 @@ async function updatedByHod(data, id) {
     // console.log(data,"this is data");
     const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
       $set: { isAccepetedByHOD: true },
-    });
+    },{new:true});
     console.log(proposalInstance, "proposalInstance");
     return proposalInstance;
   } catch (error) {
@@ -143,7 +143,7 @@ async function rejectedSupervisor(data, id) {
     // console.log(data,"this is data");
     const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
       $set: { isRejected: true },
-    });
+    },{new:true});
     console.log(proposalInstance, "proposalInstance");
     return proposalInstance;
   } catch (error) {

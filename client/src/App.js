@@ -16,6 +16,7 @@ import UserProfile from "./components/userProfile";
 import SuperVisorPanel from "./components/SuperVisorPanel";
 import CreaetPrposaldemo from "./components/CreaetPrposaldemo";
 
+
 function App() {
   const { user } = useAuthContext(AuthContext);
 

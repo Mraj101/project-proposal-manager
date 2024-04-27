@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import CustomLoader from "./CustomLoader";
+
+// import { ToastContainer, toast } from 'react-toastify';
 
 const SuperVisorPanel = () => {
   const [proposals, setProposals] = useState([]);
   const { usr, setUsr } = useAuthContext();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const fetchProposals = async (receivedUsr) => {
     try {
@@ -20,34 +24,43 @@ const SuperVisorPanel = () => {
 
   const handleAcceptProposal = async (proposalId) => {
     try {
+      setLoading(true);
+      toast.success("Accepted proposal");
       const response = await axios.post(
         `http://localhost:8000/api/v1/proposals/update/${proposalId}`,
         { isAccepted: true }
       );
-      const updatedProposal = response.data;
-      setProposals((prevProposals) =>
-        prevProposals.map((proposal) =>
+      const updatedProposal = response.data.data;
+      console.log(updatedProposal);
+      setProposals((prev) =>
+        prev.map((proposal) =>
           proposal._id === updatedProposal._id ? updatedProposal : proposal
         )
       );
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error accepting proposal:", error);
     }
   };
 
   const handleRejectProposal = async (proposalId) => {
     try {
+      setLoading(true);
+      toast.error("Rejected proposal");
       const response = await axios.post(
         `http://localhost:8000/api/v1/proposals/rejected/${proposalId}`,
         { isRejected: true }
       );
-      const updatedProposal = response.data;
+      const updatedProposal = response.data.data;
       setProposals((prevProposals) =>
         prevProposals.map((proposal) =>
           proposal._id === updatedProposal._id ? updatedProposal : proposal
         )
       );
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error rejecting proposal:", error);
     }
   };
@@ -77,7 +90,7 @@ const SuperVisorPanel = () => {
         </h1>
         <div className="absolute inset-0 bg-black opacity-30"></div>
       </div>
-      
+
       <div className="overflow-x-auto mx-10 my-10 border-2 rounded-lg">
         <table className="table">
           <thead className="border-b-2">
@@ -111,25 +124,30 @@ const SuperVisorPanel = () => {
                     <span className="px-4 py-2 rounded-lg bg-blue-400 text-white">
                       Sent to HOD
                     </span>
-                  ) : 
-                  proposal.isRejected? (
+                  ) : proposal.isRejected ? (
                     <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
                       Rejected
                     </span>
                   ) : (
                     <div className="flex gap-5">
-                      <button
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
-                        onClick={() => handleAcceptProposal(proposal._id)}
-                      >
-                        ✔️ Accept
-                      </button>
-                      <button
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white"
-                        onClick={() => handleRejectProposal(proposal._id)}
-                      >
-                        ❌ Reject
-                      </button>
+                      {loading ? (
+                        <CustomLoader />
+                      ) : (
+                        <>
+                          <button
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
+                            onClick={() => handleAcceptProposal(proposal._id)}
+                          >
+                            ✔️ Accept
+                          </button>
+                          <button
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white"
+                            onClick={() => handleRejectProposal(proposal._id)}
+                          >
+                            ❌ Reject
+                          </button>
+                        </>
+                      )}
                     </div>
                   )}
                 </td>
@@ -138,6 +156,7 @@ const SuperVisorPanel = () => {
           </tbody>
         </table>
       </div>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };

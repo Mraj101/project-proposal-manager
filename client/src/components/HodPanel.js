@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import CustomLoader from "./CustomLoader";
 
 const HodPanel = () => {
   const [proposals, setProposals] = useState([]);
   const { usr, setUsr } = useAuthContext();
+  const [loading,setLoading]= useState(false);
+
 
   const fetchProposals = async () => {
     try {
@@ -19,34 +23,44 @@ const HodPanel = () => {
 
   const handleAcceptProposal = async (proposalId) => {
     try {
+      setLoading(true);
       const response = await axios.post(
         `http://localhost:8000/api/v1/proposals/updatebyhod/${proposalId}`,
         { isAccepetedByHOD: true }
       );
-      const updatedProposal = response.data;
+      
+      const updatedProposal = response.data.data;
       setProposals((prevProposals) =>
         prevProposals.map((proposal) =>
           proposal._id === updatedProposal._id ? updatedProposal : proposal
         )
       );
+
+      setLoading(false);
+      toast.success('Accepted proposal by Hod Successfull')
     } catch (error) {
+      setLoading(false);
       console.error("Error accepting proposal:", error);
     }
   };
 
   const handleRejectProposal = async (proposalId) => {
     try {
+      setLoading(true)
       const response = await axios.post(
         `http://localhost:8000/api/v1/proposals/rejectedbyhod/${proposalId}`,
         { isRejectedByHOD: true }
       );
-      const updatedProposal = response.data;
+      const updatedProposal = response.data.data;
       setProposals((prevProposals) =>
         prevProposals.map((proposal) =>
           proposal._id === updatedProposal._id ? updatedProposal : proposal
         )
       );
+      setLoading(false);
+      toast.error(' proposal rejected by Hod')
     } catch (error) {
+      setLoading(false)
       console.error("Error accepting proposal:", error);
     }
   };
@@ -208,6 +222,7 @@ const HodPanel = () => {
           </tbody>
         </table>
       </div>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };
