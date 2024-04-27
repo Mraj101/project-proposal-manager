@@ -53,18 +53,33 @@ async function create(data) {
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const imgOnCloudinary = await uploadOnCloudinary(data.file.path);
-    const user = await userModels.create({
-      department,
-      userId,
-      session,
-      email,
-      password: hash,
-      username: username.toLowerCase(),
-      img:imgOnCloudinary?.url,
-      gender,
-      position,
-    });
+    let user = null;
+    if(data.file){
+      const imgOnCloudinary = await uploadOnCloudinary(data.file.path);
+       user = await userModels.create({
+        department,
+        userId,
+        session,
+        email,
+        password: hash,
+        username: username.toLowerCase(),
+        img:imgOnCloudinary?.url,
+        gender,
+        position,
+      });
+    }else{
+       user = await userModels.create({
+        department,
+        userId,
+        session,
+        email,
+        password: hash,
+        username: username.toLowerCase(),
+        gender,
+        position,
+      });
+    }
+   
 
     if (!user) {
       throw new ApiError(500, "could not create user");
