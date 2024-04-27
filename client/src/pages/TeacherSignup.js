@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import CustomLoader from "../components/CustomLoader";
 
 const TeacherSignup = () => {
   const [username, setUsername] = useState("");
@@ -13,11 +14,13 @@ const TeacherSignup = () => {
   const [userId, setuserId] = useState(""); 
   const [gender, setGender] = useState(""); 
   const [position, setPosition] = useState("");
+  const [loading,setLoading]= useState(false)
 
   
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     if (password !== confirmPassword) {
       setPasswordsMatch(false);
       return;
@@ -52,7 +55,9 @@ const TeacherSignup = () => {
       setDepartment("");
       setuserId(""); // Clear userId field
       setGender(""); // Clear gender field
+    setLoading(false)
     } catch (error) {
+    setLoading(false)
       console.log("Error occurred while creating user:", error);
     }
   };
@@ -253,13 +258,15 @@ const TeacherSignup = () => {
           </div>
 
           {/* Submit Button */}
-          <button
+          {
+            loading ? <CustomLoader></CustomLoader>: <button
             onClick={handleSubmit}
             className="w-full px-4 py-3 mt-4 text-lg text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
             type="submit"
           >
             Sign Up
           </button>
+          }
         </form>
       </div>
     </div>
