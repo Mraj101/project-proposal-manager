@@ -7,6 +7,21 @@ const StudentPanel = () => {
   const [demoProposals, setDemoProposals] = useState([]);
   const { usr, setUsr } = useAuthContext();
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterProposals, setFilterProposals] = useState([]);
+
+  // Handle search
+  const handleSearch = () => {
+    if (searchQuery.trim() === "") {
+      setFilterProposals([]);
+    } else {
+      const filtered = demoProposals.filter((proposal) =>
+        proposal.projectTitle.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilterProposals(filtered);
+    }
+  };
+
 
   const fetchProposals = async (receivedUsr) => {
     try {
@@ -22,6 +37,7 @@ const StudentPanel = () => {
     }
   };
 
+  
   const fetchDemoProposals = async () => {
     try {
       const response = await axios.get(
@@ -78,7 +94,13 @@ const StudentPanel = () => {
 
           <div className="my-5">
             <label className="input input-bordered flex items-center gap-2 w-72 mx-auto">
-              <input type="text" className="grow" placeholder="Search" />
+              <input
+                type="text"
+                className="grow"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search"
+              />
               <span className="badge badge-info"></span>
             </label>
           </div>
@@ -88,7 +110,7 @@ const StudentPanel = () => {
               Previously submitted proposals
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-              {demoProposals.map((demoProposal) => (
+              {filterProposals.map((demoProposal) => (
                 <div
                   key={demoProposal._id}
                   className="bg-white overflow-hidden shadow-md rounded-lg"
