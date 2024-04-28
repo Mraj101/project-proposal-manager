@@ -32,7 +32,10 @@ const Navbar = () => {
   // Logout
   const handleLogout = async () => {
     try {
-      await logout();
+      localStorage.removeItem('user')
+      // await logout();
+      window.location.reload()
+      navigate('/login')
     } catch (error) {
       console.log("Error logging out", error);
     }
