@@ -20,7 +20,7 @@ const Login = () => {
         setTimeout(() => {
           navigate("/");
           setLoader(false);
-        }, 1000);
+        }, 500);
       }
     } catch (error) {
       setLoader(false);

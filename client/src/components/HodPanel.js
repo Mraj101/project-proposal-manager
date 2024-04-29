@@ -60,6 +60,8 @@ const HodPanel = () => {
           proposal._id === updatedProposal._id ? updatedProposal : proposal
         )
       );
+
+      // setProposals(updatedProposal);
       setLoading(false);
       toast.error(" proposal rejected by Hod");
     } catch (error) {
@@ -248,25 +250,31 @@ const HodPanel = () => {
                         </span>
                       )}
 
-                      {proposal?.isAccepted === false &&
+                      {((proposal?.isAccepted === false &&
                         proposal?.isRejected === false &&
                         proposal?.isAccepetedByHOD === false &&
-                        proposal?.isRejectedByHOD === false && (
-                          <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
-                            Pending
-                          </span>
-                        )}
+                        proposal?.isRejectedByHOD === false) ||
+                        (proposal?.isAccepted === true &&
+                          proposal?.isRejected === false &&
+                          proposal?.isAccepetedByHOD === false &&
+                          proposal?.isRejectedByHOD === false)) && (
+                        <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
+                          Pending
+                        </span>
+                      )}
 
-                      {proposal?.isAccepted === true &&
+                      {/* {proposal?.isAccepted === true &&
                         proposal?.isRejected === false &&
                         proposal?.isAccepetedByHOD === false &&
                         proposal?.isRejectedByHOD === false && (
                           <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
                             pending
                           </span>
-                        )}
+                        )} */}
 
-                      {proposal?.isRejected && (
+                      {(proposal?.isRejected ||
+                        (proposal?.isAccepted === true &&
+                          proposal?.isRejectedByHOD === true)) && (
                         <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
                           Rejected
                         </span>
@@ -279,12 +287,12 @@ const HodPanel = () => {
                     </span>
                   )} */}
 
-                      {proposal?.isAccepted === true &&
+                      {/* {proposal?.isAccepted === true &&
                         proposal?.isRejectedByHOD === true && (
                           <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
                             rejected
                           </span>
-                        )}
+                        )} */}
                     </td>
                   </tr>
                 ))}
