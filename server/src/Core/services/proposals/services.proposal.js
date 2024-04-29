@@ -72,9 +72,7 @@ async function createDemo(data) {
       file: data.file.filename,
     });
 
-
     const userInstance = await userModels.findById(data.body.user);
-
 
     // console.log(userInstance,"userinstance");
 
@@ -100,14 +98,16 @@ async function createDemo(data) {
   }
 }
 
-
-
 async function updatebySupervisor(data, id) {
   try {
     // console.log(data,"this is data");
-    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
-      $set: { isAccepted: true },
-    },{new:true});
+    const proposalInstance = await proposalModels.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: { isAccepted: true },
+      },
+      { new: true }
+    );
     console.log(proposalInstance, "proposalInstance");
     return proposalInstance;
   } catch (error) {
@@ -123,9 +123,13 @@ async function updatebySupervisor(data, id) {
 async function updatedByHod(data, id) {
   try {
     // console.log(data,"this is data");
-    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
-      $set: { isAccepetedByHOD: true },
-    },{new:true});
+    const proposalInstance = await proposalModels.findByIdAndUpdate(
+      id,
+      {
+        $set: { isAccepetedByHOD: true },
+      },
+      { new: true }
+    );
     console.log(proposalInstance, "proposalInstance");
     return proposalInstance;
   } catch (error) {
@@ -141,9 +145,13 @@ async function updatedByHod(data, id) {
 async function rejectedSupervisor(data, id) {
   try {
     // console.log(data,"this is data");
-    const proposalInstance = await proposalModels.findByIdAndUpdate(id, {
-      $set: { isRejected: true },
-    },{new:true});
+    const proposalInstance = await proposalModels.findByIdAndUpdate(
+      id,
+      {
+        $set: { isRejected: true },
+      },
+      { new: true }
+    );
     console.log(proposalInstance, "proposalInstance");
     return proposalInstance;
   } catch (error) {
@@ -173,7 +181,6 @@ async function rejectedByHodsrv(data, id) {
     }
   }
 }
-
 
 // async function getAll() {
 //   try {
@@ -226,7 +233,7 @@ async function get(data) {
     console.log("all blogs", allProposals);
     console.log("proposal of user", user);
 
-    // const superVisorName = await 
+    // const superVisorName = await
 
     const modifiedProposals = allProposals.map((singleProposal, index) => {
       const matchedUser = user.find(
@@ -236,7 +243,8 @@ async function get(data) {
 
       const superVisor = user.find(
         (singleSupervisor) =>
-        singleSupervisor.userId.toString() === singleProposal.supervisorId.toString()
+          singleSupervisor.userId.toString() ===
+          singleProposal.supervisorId.toString()
       );
       return {
         supervisorName: superVisor?.username,
@@ -257,8 +265,6 @@ async function get(data) {
     }
   }
 }
-
-
 
 async function getDemo(data) {
   try {
@@ -357,4 +363,15 @@ async function getSingle(data) {
   }
 }
 
-module.exports = {rejectedSupervisor, create, get, updatebySupervisor, getSingle, getIndividual,updatedByHod, rejectedByHodsrv, getDemo, createDemo };
+module.exports = {
+  rejectedSupervisor,
+  create,
+  get,
+  updatebySupervisor,
+  getSingle,
+  getIndividual,
+  updatedByHod,
+  rejectedByHodsrv,
+  getDemo,
+  createDemo,
+};

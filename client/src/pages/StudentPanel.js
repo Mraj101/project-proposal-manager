@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Search from "../components/Search";
-import { defineLocale } from "moment";
 import DemoProposals from "../components/DemoProposals";
 
 const StudentPanel = () => {

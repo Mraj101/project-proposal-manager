@@ -24,20 +24,36 @@ const HodPanel = () => {
     }
   };
 
-  const handleAcceptProposal = async (proposalId) => {
+  const handleAcceptProposal = async (proposal) => {
     try {
       setLoading(true);
+      const finalData = { isAccepetedByHOD: true };
       const response = await axios.post(
-        `http://localhost:8000/api/v1/proposals/updatebyhod/${proposalId}`,
-        { isAccepetedByHOD: true }
+        `http://localhost:8000/api/v1/proposals/updatebyhod/${proposal._id}`,
+        finalData
       );
 
-      const updatedProposal = response.data.data;
-      setProposals((prevProposals) =>
-        prevProposals.map((proposal) =>
-          proposal._id === updatedProposal._id ? updatedProposal : proposal
-        )
-      );
+      // const updatedProposal = response.data.data;
+      // setProposals((prevProposals) =>
+      //   prevProposals.map((proposal) =>
+      //     proposal._id === updatedProposal._id ? updatedProposal : proposal
+      //   )
+      // );
+
+      const proposalIndex = proposals.findIndex((p) => p._id === proposal._id);
+
+      // If the proposal is found
+      if (proposalIndex !== -1) {
+        // Update the specific property
+        setProposals((prevProposals) => {
+          const updatedProposals = [...prevProposals];
+          updatedProposals[proposalIndex] = {
+            ...updatedProposals[proposalIndex],
+            isAccepetedByHOD: finalData.isAccepetedByHOD,
+          };
+          return updatedProposals;
+        });
+      }
 
       setLoading(false);
       toast.success("Accepted proposal by Hod Successfull");
@@ -47,21 +63,36 @@ const HodPanel = () => {
     }
   };
 
-  const handleRejectProposal = async (proposalId) => {
+  const handleRejectProposal = async (proposal) => {
     try {
       setLoading(true);
+      const finalData = { isRejectedByHOD: true };
       const response = await axios.post(
-        `http://localhost:8000/api/v1/proposals/rejectedbyhod/${proposalId}`,
-        { isRejectedByHOD: true }
+        `http://localhost:8000/api/v1/proposals/rejectedbyhod/${proposal._id}`,
+        finalData
       );
-      const updatedProposal = response.data.data;
-      setProposals((prevProposals) =>
-        prevProposals.map((proposal) =>
-          proposal._id === updatedProposal._id ? updatedProposal : proposal
-        )
-      );
-
+      // const updatedProposal = response.data.data;
+      // setProposals((prevProposals) =>
+      //   prevProposals.map((proposal) =>
+      //     proposal._id === updatedProposal._id ? updatedProposal : proposal
+      //   )
+      // );
       // setProposals(updatedProposal);
+
+      const proposalIndex = proposals.findIndex((p) => p._id === proposal._id);
+
+      // If the proposal is found
+      if (proposalIndex !== -1) {
+        // Update the specific property
+        setProposals((prevProposals) => {
+          const updatedProposals = [...prevProposals];
+          updatedProposals[proposalIndex] = {
+            ...updatedProposals[proposalIndex],
+            isRejectedByHOD: finalData.isRejectedByHOD,
+          };
+          return updatedProposals;
+        });
+      }
       setLoading(false);
       toast.error(" proposal rejected by Hod");
     } catch (error) {
@@ -225,17 +256,13 @@ const HodPanel = () => {
                           <div className="flex gap-5">
                             <button
                               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
-                              onClick={() =>
-                                handleAcceptProposal(proposal?._id)
-                              }
+                              onClick={() => handleAcceptProposal(proposal)}
                             >
                               ✔️ Accept
                             </button>
                             <button
                               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-400 text-white"
-                              onClick={() =>
-                                handleRejectProposal(proposal?._id)
-                              }
+                              onClick={() => handleRejectProposal(proposal)}
                             >
                               ❌ Reject
                             </button>

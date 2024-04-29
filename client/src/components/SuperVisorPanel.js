@@ -186,8 +186,8 @@ const SuperVisorPanel = () => {
                     <td>
                       {proposal?.isAccepted === true &&
                         proposal.isAccepetedByHOD == false && (
-                          <span className="px-4 py-2 rounded-lg bg-green-400 text-white">
-                            Approved
+                          <span className="px-4 py-2 rounded-lg bg-blue-400 text-white">
+                            sent to Hod
                           </span>
                         )}
 
@@ -262,9 +262,7 @@ const SuperVisorPanel = () => {
                           <div className="flex gap-5">
                             <button
                               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-400 text-white"
-                              onClick={() =>
-                                handleAcceptProposal(proposal?._id)
-                              }
+                              onClick={() => handleAcceptProposal(proposal)}
                             >
                               ✔️ Accept
                             </button>
