@@ -15,7 +15,7 @@ const { ApiError } = require("../../utils/ApiError.js");
 
 async function createUser(req, res) {
   try {
-    // console.log("Controller create user", req.body);
+    console.log("Controller create user", req.body);
     // console.log("hello");
     let response = await userServices.create(req);
     return res

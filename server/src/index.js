@@ -19,12 +19,4 @@ DbConnect().then(()=>{
     console.log('mongo db connection failed !!, ',error)
 })
 
-// (async () => {
-//   try {
-//     await mongoose.connect(`${process.env.CONNECTION_URI}/${dbName}`);
-//     console.log("Connected to MongoDB");
-//   } catch (error) {
-//     console.log("Connection failed and more: ", error);
-//     process.exit(1);
-//   }
-// })();
+

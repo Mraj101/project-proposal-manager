@@ -1,6 +1,5 @@
 const proposalModels = require("../../../models/proposals.models");
 const proposalDemoModels = require("../../../models/proposalDemo.models");
-const countModels = require("../../../models/count.models");
 const userModels = require("../../../models/user.models");
 const { ApiError } = require("../../../utils/ApiError");
 const { uploadOnCloudinary } = require("../../../utils/cloudinary");

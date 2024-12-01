@@ -1,2 +1,2 @@
-const dbName="projectManager";
+const dbName="ProjecProposalManager";
 module.exports = {dbName}
