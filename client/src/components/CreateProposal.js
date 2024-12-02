@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 ////
 const CreateProposal = () => {
   const { usr, setUsr } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [fileSelected, setFileSelected] = useState(false);
   const [supervisors, setSupervisors] = useState([]);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: "",
@@ -76,6 +80,11 @@ const CreateProposal = () => {
       });
       // Reset fileSelected state
       setFileSelected(false);
+      if(response?.data?.success=== true){
+        navigate('/StudentPanel');
+        return Swal.fire("Proposal Submitted Successfully ");
+      }
+
     } catch (error) {
       console.error("Error creating proposal:", error);
       setLoading(false);
@@ -110,7 +119,7 @@ const CreateProposal = () => {
               htmlFor="description"
               className="block text-lg font-medium mb-2"
             >
-              Project Description
+              Project repository
             </label>
             <textarea
               id="description"

@@ -163,7 +163,7 @@ const SuperVisorPanel = () => {
                   <th>User Id</th>
                   <th>Deparment</th>
                   <th>Project Title</th>
-                  <th>Project Details</th>
+                  <th>Project Progress</th>
                   <th>File</th>
                   <th>Proposal Sending Date</th>
                   <th>Supervisor Name</th>
@@ -179,8 +179,18 @@ const SuperVisorPanel = () => {
                     <td>{proposal?.userId}</td>
                     <td>{proposal?.department}</td>
                     <td>{proposal?.projectTitle}</td>
-                    <td>{proposal?.description}</td>
-                    <td>{proposal?.file.substring(0, 10)}</td>
+                    <td> <a target="_blank"
+                      href={proposal?.description} rel="noopener noreferrer">
+                      Git Link
+                    </a></td>
+                    <td>
+                      <a
+                        target="_blank"
+                        href={`http://localhost:8000/files/${proposal.file}`}
+                      >
+                        view document
+                      </a>
+                    </td>
                     <td>{proposal?.createdAt.split("T")[0]}</td>
                     <td>{proposal?.supervisorName}</td>
                     <td>
@@ -218,21 +228,21 @@ const SuperVisorPanel = () => {
                         (proposal?.isAccepted === true &&
                           proposal?.isRejectedByHOD === true &&
                           proposal?.isAccepetedByHOD === false)) && (
-                        <div className="flex gap-5">
-                          <button
-                            className="flex items-center gap-2 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
+                          <div className="flex gap-5">
+                            <button
+                              className="flex items-center gap-2 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
                             // onClick={() => handleAcceptProposal(proposal?._id)}
-                          >
-                            Accept
-                          </button>
-                          <button
-                            className="flex items-center gap-2 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
+                            >
+                              Accept
+                            </button>
+                            <button
+                              className="flex items-center gap-2 py-2 rounded-lg bg-slate-200 px-4 text-white hover:cursor-default"
                             // onClick={() => handleRejectProposal(proposal?._id)}
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      )}
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        )}
 
                       {loading ? (
                         <div role="status">
@@ -291,10 +301,10 @@ const SuperVisorPanel = () => {
                           proposal?.isRejected === false &&
                           proposal?.isAccepetedByHOD === false &&
                           proposal?.isRejectedByHOD === false)) && (
-                        <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
-                          Pending
-                        </span>
-                      )}
+                          <span className="px-4 py-2 rounded-lg bg-yellow-400 text-white">
+                            Pending
+                          </span>
+                        )}
 
                       {/* {proposal?.isAccepted === true &&
                         proposal?.isRejected === false &&
@@ -308,10 +318,10 @@ const SuperVisorPanel = () => {
                       {(proposal?.isRejected ||
                         (proposal?.isAccepted === true &&
                           proposal?.isRejectedByHOD === true)) && (
-                        <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
-                          Rejected
-                        </span>
-                      )}
+                          <span className="px-4 py-2 rounded-lg bg-red-400 text-white">
+                            Rejected
+                          </span>
+                        )}
 
                       {/* {(proposal?.isAccepted === true ||
                     proposal?.isRejected === true) && (

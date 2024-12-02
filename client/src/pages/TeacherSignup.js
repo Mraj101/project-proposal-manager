@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import CustomLoader from "../components/CustomLoader";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const TeacherSignup = () => {
   const [username, setUsername] = useState("");
@@ -14,7 +16,8 @@ const TeacherSignup = () => {
   const [userId, setuserId] = useState(""); 
   const [gender, setGender] = useState(""); 
   const [position, setPosition] = useState("");
-  const [loading,setLoading]= useState(false)
+  const [loading,setLoading]= useState(false);
+  const navigate = useNavigate();
 
   
 
@@ -56,6 +59,10 @@ const TeacherSignup = () => {
       setuserId(""); // Clear userId field
       setGender(""); // Clear gender field
     setLoading(false)
+    if(res?.data?.success=== true){
+      navigate('/login');
+      return Swal.fire("Successfully Signed Up");
+    }
     } catch (error) {
     setLoading(false)
       console.log("Error occurred while creating user:", error);

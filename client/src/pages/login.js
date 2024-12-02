@@ -1,29 +1,25 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UseLogin } from "../hooks/useLogin";
-import CustomLoader from "../components/CustomLoader";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login, isLoading, error } = UseLogin();
-  const [loader, setLoader] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
   const handleSubmit = async (e) => {
-    setLoader(true);
     e.preventDefault();
+    setLoginError(null);
     try {
       const res = await login(email, password);
       if (res) {
-        const user = localStorage.setItem("user", JSON.stringify(res));
-        setTimeout(() => {
-          navigate("/");
-          setLoader(false);
-        }, 500);
+        localStorage.setItem("user", JSON.stringify(res));
+        navigate("/");
       }
     } catch (error) {
-      setLoader(false);
+      setLoginError(error.response?.data?.error || "Invalid email or password");
       console.error("Error logging in:", error);
     }
   };
@@ -58,7 +54,11 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            {!loader ? (
+            {loginError && (
+              <div className="text-red-500 text-sm mb-4">{loginError}</div>
+            )}
+
+            {!isLoading ? (
               <button
                 className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
                 type="submit"
@@ -70,7 +70,7 @@ const Login = () => {
                 <div role="status" className="mx-auto">
                   <svg
                     aria-hidden="true"
-                    class="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ const Login = () => {
                       fill="currentFill"
                     />
                   </svg>
-                  <span class="sr-only">Loading...</span>
+                  <span className="sr-only">Loading...</span>
                 </div>
               </div>
             )}

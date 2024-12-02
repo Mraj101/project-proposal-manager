@@ -1,6 +1,7 @@
 import Home from "./pages/StudentPanel";
 import { Routes, Route, Navigate } from "react-router-dom";
 import CreateProposal from "./components/CreateProposal";
+import StudentPanel from "./pages/StudentPanel";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/StudentSignup";
 import Signuppage from "./pages/SignUppage";
@@ -34,6 +35,7 @@ function App() {
           <Route element={<RequireAuth />}>
             <Route index element={<HomeLayout />} />
             <Route path="/create" element={<CreateProposal />} />
+            <Route path="/StudentPanel" element={<StudentPanel />} />
             <Route path="/createDemo" element={<CreaetPrposaldemo />} />
             {/* <Route path="/blogs/:id" element={<SingleBlog />} /> */}
             <Route path="/userProfile" element={<UserProfile />} />

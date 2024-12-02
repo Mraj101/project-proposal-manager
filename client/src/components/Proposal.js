@@ -33,11 +33,9 @@ const Proposal = ({
             <span className="mt-2">{userName}</span>
           </div>
           <h2 className="text-xl font-bold mb-3">{projectTitle}</h2>
-          <p className="text-gray-600">
-            {description.length > 200
-              ? `${description.substring(0, 200)}...`
-              : description}
-          </p>
+          <a href={description} target="_blank" rel="noopener noreferrer">
+            git link
+          </a>
         </div>
 
         <div className="flex flex-col justify-between items-end ml-auto">

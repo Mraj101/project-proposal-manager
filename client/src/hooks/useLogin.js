@@ -3,15 +3,10 @@ import { useAuthContext } from "./useAuthContext";
 import axios from "axios";
 
 export const UseLogin = () => {
-  console.log("hi");
-  // console.log("hllo");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  console.log("hi");
 
   const { dispatch, setUsr } = useAuthContext();
-
-  console.log("before login");
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -19,7 +14,7 @@ export const UseLogin = () => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/newuser/login",
-        { email, password },
+        { email, password }
       );
       const user = response.data.data;
       if (user) {
@@ -29,7 +24,8 @@ export const UseLogin = () => {
       return user;
     } catch (error) {
       setIsLoading(false);
-      setError(error.response.data.error);
+      setError(error.response?.data?.error || "Login failed");
+      throw error;  // Throw the error to be caught in the component
     }
   };
 

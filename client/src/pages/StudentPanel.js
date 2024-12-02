@@ -13,17 +13,6 @@ const StudentPanel = () => {
   const [filterProposals, setFilterProposals] = useState([]);
   const [search, setSearch] = useState("");
 
-  // Handle search
-  // const handleSearch = () => {
-  //   if (searchQuery.trim() === "") {
-  //     setFilterProposals([]);
-  //   } else {
-  //     const filtered = demoProposals.filter((proposal) =>
-  //       proposal.projectTitle.toLowerCase().includes(searchQuery.toLowerCase())
-  //     );
-  //     setFilterProposals(filtered);
-  //   }
-  // };
 
   const fetchProposals = async (receivedUsr) => {
     try {
@@ -74,15 +63,6 @@ const StudentPanel = () => {
     }
   };
 
-  // const handleSearch = (searchValue) => {
-  //   alert(searchValue);
-  //   const value = searchValue.trim().toLowerCase();
-  //   const filteredProposals = proposals.filter((proposal) => {
-  //     const title = proposal.projectTitle.toLowerCase();
-  //     return title.includes(value);
-  //   });
-  //   setDemoProposals(filteredProposals);
-  // };
 
   const handleChange = (e) => {
     // console.log(e.target.value);
@@ -142,7 +122,7 @@ const StudentPanel = () => {
           {/* fetching demo proposals */}
           <div className="m-2">
             <h1 className="font-bold text-3xl text-center underline">
-              Previously submitted proposals
+              Demo Proposals From Supervisor
             </h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
               {demoProposals
